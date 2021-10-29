@@ -6,7 +6,26 @@ load(
 )
 
 def _bzlformat_format_impl(ctx):
-    pass
+    updsrcs = []
+    for src in ctx.files.srcs:
+        out = ctx.actions.declare_file(src.basename + ctx.attr.output_suffix)
+        updsrcs.append(update_srcs.create(src = src, out = out))
+        inputs = [src]
+
+        args = ctx.actions.args()
+        args.add_all([
+        ])
+        ctx.actions.run(
+            outputs = [out],
+            inputs = inputs,
+            executable = ctx.executable._buildifier,
+            arguments = [args],
+        )
+
+    return [
+        DefaultInfo(files = depset([updsrc.out for updsrc in updsrcs])),
+        UpdateSrcsInfo(update_srcs = depset(updsrcs)),
+    ]
 
 bzlformat_format = rule(
     implementation = _bzlformat_format_impl,
@@ -17,7 +36,7 @@ bzlformat_format = rule(
             doc = "The Starlark source files to format.",
         ),
         "_buildifier": attr.label(
-            default = "@cgrindel_rules_bzlformat//bzlformat:buildifier",
+            default = "@com_github_bazelbuild_buildtools//buildifier",
             executable = True,
             cfg = "host",
             allow_files = True,

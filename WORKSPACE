@@ -25,8 +25,6 @@ go_register_toolchains(version = "1.17.2")
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
-# If you use WORKSPACE.bazel, use the following line instead of the bare gazelle_dependencies():
-# gazelle_dependencies(go_repository_default_config = "@//:WORKSPACE.bazel")
 gazelle_dependencies()
 
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
