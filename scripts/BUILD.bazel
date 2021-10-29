@@ -1,0 +1,6 @@
+sh_binary(
+    name = "buildifier",
+    srcs = ["buildifier.sh"],
+    data = ["@com_github_bazelbuild_buildtools//buildifier"],
+    deps = ["@bazel_tools//tools/bash/runfiles"],
+)
