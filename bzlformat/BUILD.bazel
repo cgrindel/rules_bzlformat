@@ -1,1 +1,21 @@
-# Intentionally blank
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
+
+package(default_visibility = ["//visibility:public"])
+
+bzl_library(
+    name = "deps",
+    srcs = ["deps.bzl"],
+)
+
+bzl_library(
+    name = "bzlformat",
+    srcs = ["bzlformat.bzl"],
+    deps = [
+        "//bzlformat/internal:bzlformat_format",
+    ],
+)
+
+buildifier(
+    name = "buildifier",
+)
