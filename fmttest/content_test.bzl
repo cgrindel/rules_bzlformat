@@ -11,8 +11,8 @@ def _do_equals(ctx):
         template = ctx.file._equals_template,
         output = test_exe,
         substitutions = {
-            "%EXPECTED%": expected_file.path,
-            "%ACTUAL%": actual_file.path,
+            "%EXPECTED%": expected_file.short_path,
+            "%ACTUAL%": actual_file.short_path,
         },
         is_executable = True,
     )

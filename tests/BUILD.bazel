@@ -50,7 +50,7 @@ filter_srcs(
 content_test(
     name = "format_test",
     equals = """\
-def foo(tags=[], srcs=[]):
+def foo(tags = [], srcs = []):
     pass
 """,
     file = ":foo_bzl_formatted",
