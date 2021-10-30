@@ -3,7 +3,6 @@ load("//fmttest:filter_srcs.bzl", "filter_srcs")
 load("@bazel_skylib//rules:build_test.bzl", "build_test")
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
-# load("//fmttest:content_test.bzl", "content_test")
 
 build_test(
     name = "public_api",
@@ -92,60 +91,3 @@ bzlformat_format(
     )
     for fi in _FORMAT_INFOS
 ]
-
-# write_file(
-#     name = "foo_bzl",
-#     out = "foo.bzl",
-#     content = [
-#         "def foo(tags=[], srcs=[]):",
-#         "    pass",
-#     ],
-# )
-
-# write_file(
-#     name = "bar_bzl",
-#     out = "bar.bzl",
-#     content = [
-#         "load(':foo.bzl', 'foo'); foo(tags=['b', 'a'],srcs=['d', 'c'])",
-#     ],
-# )
-
-# bzlformat_format(
-#     name = "format",
-#     srcs = [
-#         ":bar_bzl",
-#         ":foo_bzl",
-#     ],
-# )
-
-# filter_srcs(
-#     name = "foo_bzl_formatted",
-#     srcs = [":format"],
-#     expected_count = 1,
-#     filename_ends_with = "foo.bzl_formatted",
-# )
-
-# write_file(
-#     name = "foo_bzl_expected",
-#     out = "foo.bzl.expected",
-#     content = [
-#         "def foo(tags = [], srcs = []):",
-#         "    pass",
-#         "",
-#     ],
-# )
-
-# diff_test(
-#     name = "foo_format_test",
-#     file1 = ":foo_bzl_formatted",
-#     file2 = ":foo_bzl_expected",
-# )
-
-# # content_test(
-# #     name = "foo_format_test",
-# #     equals = """\
-# # def foo(tags = [], srcs = []):
-# #     pass
-# # """,
-# #     file = ":foo_bzl_formatted",
-# # )
