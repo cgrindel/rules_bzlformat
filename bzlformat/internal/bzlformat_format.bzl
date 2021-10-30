@@ -10,14 +10,15 @@ def _bzlformat_format_impl(ctx):
     for src in ctx.files.srcs:
         out = ctx.actions.declare_file(src.basename + ctx.attr.output_suffix)
         updsrcs.append(update_srcs.create(src = src, out = out))
-        inputs = [src]
 
         args = ctx.actions.args()
         args.add_all([
+            src,
+            out,
         ])
-        ctx.actions.run_shell(
+        ctx.actions.run(
             outputs = [out],
-            inputs = inputs,
+            inputs = [src],
             executable = ctx.executable._buildifier,
             arguments = [args],
         )
@@ -46,13 +47,6 @@ bzlformat_format = rule(
             allow_files = True,
             doc = "The `buildifier` script.",
         ),
-        # "_buildifier": attr.label(
-        #     default = "@com_github_bazelbuild_buildtools//buildifier",
-        #     executable = True,
-        #     cfg = "host",
-        #     allow_files = True,
-        #     doc = "The `buildifier` executable.",
-        # ),
     },
     doc = "Formats Starlark source files using buildifier.",
 )

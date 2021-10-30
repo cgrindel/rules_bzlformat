@@ -1,0 +1,29 @@
+load("@bazel_skylib//rules:write_file.bzl", "write_file")
+load("//bzlformat:bzlformat.bzl", "bzlformat_format")
+
+write_file(
+    name = "foo_bzl",
+    out = "foo.bzl",
+    content = [
+        "def foo(tags=[], srcs=[]):",
+        "    pass",
+    ],
+    is_executable = False,
+)
+
+write_file(
+    name = "bar_bzl",
+    out = "bar.bzl",
+    content = [
+        "load(':foo.bzl', 'foo'); foo(tags=['b', 'a'],srcs=['d', 'c'])",
+    ],
+    is_executable = False,
+)
+
+bzlformat_format(
+    name = "format",
+    srcs = [
+        ":bar_bzl",
+        ":foo_bzl",
+    ],
+)
