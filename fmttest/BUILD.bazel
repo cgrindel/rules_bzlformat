@@ -1,0 +1,10 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+
+package(default_visibility = ["//visibility:public"])
+
+exports_files(["content_test_equals.sh.template"])
+
+bzl_library(
+    name = "content_test",
+    srcs = ["content_test.bzl"],
+)

@@ -1,6 +1,8 @@
-load("@bazel_skylib//rules:write_file.bzl", "write_file")
-load("@bazel_skylib//rules:build_test.bzl", "build_test")
 load("//bzlformat:bzlformat.bzl", "bzlformat_format")
+load("//fmttest:content_test.bzl", "content_test")
+load("//fmttest:filter_srcs.bzl", "filter_srcs")
+load("@bazel_skylib//rules:build_test.bzl", "build_test")
+load("@bazel_skylib//rules:write_file.bzl", "write_file")
 
 build_test(
     name = "public_api",
@@ -9,6 +11,8 @@ build_test(
         "//bzlformat:bzlformat",
     ],
 )
+
+# MARK: - bzlformat_format Tests
 
 write_file(
     name = "foo_bzl",
@@ -35,4 +39,19 @@ bzlformat_format(
         ":bar_bzl",
         ":foo_bzl",
     ],
+)
+
+filter_srcs(
+    name = "foo_bzl_formatted",
+    srcs = [":format"],
+    filename_ends_with = "foo.bzl_formatted",
+)
+
+content_test(
+    name = "format_test",
+    equals = """\
+def foo(tags=[], srcs=[]):
+    pass
+""",
+    file = ":foo_bzl_formatted",
 )
