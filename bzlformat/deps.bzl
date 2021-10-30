@@ -29,6 +29,12 @@ def bzlformat_rules_dependencies():
         urls = ["https://github.com/cgrindel/bazel-doc/archive/v0.1.0.tar.gz"],
     )
 
+    maybe(
+        native.local_repository,
+        name = "cgrindel_bazel_starlib",
+        path = "../bazel-starlib",
+    )
+
     # Buildifier Deps
 
     maybe(
