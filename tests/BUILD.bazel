@@ -1,5 +1,14 @@
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
+load("@bazel_skylib//rules:build_test.bzl", "build_test")
 load("//bzlformat:bzlformat.bzl", "bzlformat_format")
+
+build_test(
+    name = "public_api",
+    targets = [
+        "//bzlformat:deps",
+        "//bzlformat:bzlformat",
+    ],
+)
 
 write_file(
     name = "foo_bzl",
