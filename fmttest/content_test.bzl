@@ -1,3 +1,5 @@
+# TODO: DELETE ME
+
 def _do_equals(ctx):
     actual_file = ctx.file.file
     expected_file = ctx.actions.declare_file(ctx.label.name + "_expected")

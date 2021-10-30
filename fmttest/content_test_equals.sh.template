@@ -2,6 +2,8 @@
 
 #!/usr/bin/env bash
 
+# TODO: DELETE ME
+
 set -uo pipefail
 
 assert_same() {
