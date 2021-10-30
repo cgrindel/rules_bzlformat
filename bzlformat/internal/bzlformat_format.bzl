@@ -37,7 +37,7 @@ bzlformat_format = rule(
             doc = "The Starlark source files to format.",
         ),
         "output_suffix": attr.string(
-            default = "_formatted",
+            default = ".formatted",
             doc = "The suffix to add to the output filename.",
         ),
         "_buildifier": attr.label(
