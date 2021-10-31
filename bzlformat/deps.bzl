@@ -29,6 +29,7 @@ def bzlformat_rules_dependencies():
         urls = ["https://github.com/cgrindel/bazel-doc/archive/v0.1.0.tar.gz"],
     )
 
+    # TODO: FIX ME!
     maybe(
         native.local_repository,
         name = "cgrindel_bazel_starlib",
