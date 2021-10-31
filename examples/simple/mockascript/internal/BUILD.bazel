@@ -1,0 +1,13 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat")
+
+package(default_visibility = ["//mockascript:__subpackages__"])
+
+bzl_library(
+    name = "mockascript_library",
+    srcs = ["mockascript_library.bzl"],
+)
+
+bzlformat(
+    name = "format",
+)

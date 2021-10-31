@@ -32,7 +32,7 @@ def bzlformat_rules_dependencies():
     maybe(
         native.local_repository,
         name = "cgrindel_bazel_starlib",
-        path = "../bazel-starlib",
+        path = "/Users/chuck/code/cgrindel/bazel-starlib",
     )
 
     # Buildifier Deps
