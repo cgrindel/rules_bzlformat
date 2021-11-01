@@ -34,9 +34,17 @@ jobs:
       run: |
         bazelisk build //... 
 
-    - name: Test Simple Example
+    - name: Test Simple Example - No Changes
       shell: bash
       run: |
         cd examples/simple
         bazelisk test //...
-        bazelisk run //:update_all
+
+    - name: Test Simple Example With Build File Changes
+      shell: bash
+      run: |
+        cd examples/simple
+        # Change t
+        cp mockascript/internal/BUILD.bazel mockascript/internal/BUILD.bazel.orig
+        echo "load(':foo.bzl', 'foo')" >> mockascript/internal/BUILD.bazel
+
