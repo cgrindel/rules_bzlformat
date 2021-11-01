@@ -18,7 +18,7 @@ backup_file() {
 revert_file() {
   local filename="${1}"
   local backup_filename="$(backup_filename "${filename}")"
-  [[ -f "backup_filename" ]] && cp -f "${backup_filename}" "${filename}"
+  [[ -f "${backup_filename}" ]] && cp -f "${backup_filename}" "${filename}"
 }
 
 remove_backup_file() {
@@ -35,9 +35,6 @@ cleanup_files=("${internal_build_path}")
 
 # Clean up on exit.
 cleanup() {
-  # DEBUG BEGIN
-  set -x
-  # DEBUG END
   for file in "${cleanup_files[@]}" ; do
     revert_file "${file}"
     remove_backup_file "${file}"
