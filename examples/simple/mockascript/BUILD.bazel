@@ -1,5 +1,5 @@
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
-load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat")
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
 
 bzl_library(
     name = "deps",
@@ -15,6 +15,4 @@ bzl_library(
     ],
 )
 
-bzlformat(
-    name = "format",
-)
+bzlformat_pkg()
