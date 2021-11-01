@@ -6,7 +6,9 @@ load(
 )
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 
-def bzlformat_pkg(name = None, srcs = None, include_update = True):
+# TODO: Add documentation
+
+def bzlformat_pkg(name = None, srcs = None, format_visibility = None, update_visibility = None):
     if name == None:
         name = "bzlformat"
 
@@ -26,6 +28,7 @@ def bzlformat_pkg(name = None, srcs = None, include_update = True):
         bzlformat_format(
             name = format_name,
             srcs = [src],
+            visibility = format_visibility,
         )
         diff_test(
             name = name_prefix + src_name + "_fmttest",
@@ -33,8 +36,8 @@ def bzlformat_pkg(name = None, srcs = None, include_update = True):
             file2 = ":" + format_name,
         )
 
-    if include_update:
-        updatesrc_update(
-            name = name + "_update",
-            deps = format_names,
-        )
+    updatesrc_update(
+        name = name + "_update",
+        deps = format_names,
+        visibility = update_visibility,
+    )
