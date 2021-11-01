@@ -40,11 +40,9 @@ jobs:
         cd examples/simple
         bazelisk test //...
 
-    - name: Test Simple Example With Build File Changes
+    - name: Test Simple Example After Making Changes
       shell: bash
       run: |
         cd examples/simple
-        # Change t
-        cp mockascript/internal/BUILD.bazel mockascript/internal/BUILD.bazel.orig
-        echo "load(':foo.bzl', 'foo')" >> mockascript/internal/BUILD.bazel
+        ./do_change_test.sh
 

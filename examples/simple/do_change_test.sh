@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# This script file performs an integration test for rules_bzlformat.
+# Changes are made to a build file and a bzl file, then the update
+# all command is run to format the changes and copy them back to 
+# the workspace. Finally, the tests are run to be sure that everything
+# is formatted.
+
 set -euo pipefail
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" > /dev/null && pwd)"
