@@ -30,12 +30,17 @@ remove_backup_file() {
 workspace_dir="${script_dir}"
 foo_path="${workspace_dir}/mockascript/internal/foo.bzl"
 internal_build_path="${workspace_dir}/mockascript/internal/BUILD.bazel"
+mockascript_library_path="${workspace_dir}/mockascript/internal/mockascript_library.bzl"
 
-cleanup_files=("${internal_build_path}")
+modified_files=("${internal_build_path}" "${mockascript_library_path}")
+for file in "${modified_files[@]}" ; do
+  backup_file "${file}"
+done
+
 
 # Clean up on exit.
 cleanup() {
-  for file in "${cleanup_files[@]}" ; do
+  for file in "${modified_files[@]}" ; do
     revert_file "${file}"
     remove_backup_file "${file}"
   done
@@ -46,8 +51,11 @@ trap cleanup EXIT
 cd "${workspace_dir}"
 
 # Add poorly formatted code to build file.
-backup_file "${internal_build_path}"
 echo "load(':foo.bzl', 'foo')" >> "${internal_build_path}"
+
+# Add poorly formatted code to bzl file.
+echo "load(':foo.bzl', 'foo'); foo(tags=['b', 'a'],srcs=['d', 'c'])" \
+  >> "${mockascript_library_path}"
 
 # Execute the update for the repository
 bazel run //:update_all
