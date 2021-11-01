@@ -19,6 +19,10 @@ load("@cgrindel_bazel_doc//bazeldoc:deps.bzl", "bazeldoc_dependencies")
 
 bazeldoc_dependencies()
 
+load("@io_bazel_stardoc//:setup.bzl", "stardoc_repositories")
+
+stardoc_repositories()
+
 load("@cgrindel_bazel_starlib//:deps.bzl", "bazel_starlib_dependencies")
 
 bazel_starlib_dependencies()
