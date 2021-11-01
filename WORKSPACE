@@ -4,6 +4,10 @@ load("//bzlformat:deps.bzl", "bzlformat_rules_dependencies")
 
 bzlformat_rules_dependencies()
 
+load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
+
+bazel_skylib_workspace()
+
 load(
     "@cgrindel_rules_updatesrc//updatesrc:deps.bzl",
     "updatesrc_rules_dependencies",
@@ -11,9 +15,9 @@ load(
 
 updatesrc_rules_dependencies()
 
-load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
+load("@cgrindel_bazel_doc//bazeldoc:deps.bzl", "bazeldoc_dependencies")
 
-bazel_skylib_workspace()
+bazeldoc_dependencies()
 
 load("@cgrindel_bazel_starlib//:deps.bzl", "bazel_starlib_dependencies")
 
