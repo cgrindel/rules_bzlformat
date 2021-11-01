@@ -3,9 +3,9 @@ load(
     _bzlformat_format = "bzlformat_format",
 )
 load(
-    "//bzlformat/internal:bzlformat.bzl",
-    _bzlformat = "bzlformat",
+    "//bzlformat/internal:bzlformat_pkg.bzl",
+    _bzlformat_pkg = "bzlformat_pkg",
 )
 
 bzlformat_format = _bzlformat_format
-bzlformat = _bzlformat
+bzlformat_pkg = _bzlformat_pkg

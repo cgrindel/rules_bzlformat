@@ -6,7 +6,7 @@ load(
 )
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 
-def bzlformat(name = None, srcs = None, include_update = True):
+def bzlformat_pkg(name = None, srcs = None, include_update = True):
     if name == None:
         name = "bzlformat"
 

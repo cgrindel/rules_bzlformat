@@ -12,9 +12,10 @@ bzl_library(
 )
 
 bzl_library(
-    name = "bzlformat",
-    srcs = ["bzlformat.bzl"],
+    name = "bzlformat_pkg",
+    srcs = ["bzlformat_pkg.bzl"],
     deps = [
+        ":bzlformat_format",
         "@bazel_skylib//rules:diff_test",
         "@cgrindel_bazel_starlib//lib:src_utils",
         "@cgrindel_rules_updatesrc//updatesrc",
