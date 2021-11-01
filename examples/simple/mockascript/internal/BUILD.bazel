@@ -8,6 +8,4 @@ bzl_library(
     srcs = ["mockascript_library.bzl"],
 )
 
-bzlformat(
-    name = "format",
-)
+bzlformat()

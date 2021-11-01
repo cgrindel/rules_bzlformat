@@ -6,7 +6,10 @@ load(
 )
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 
-def bzlformat(name, srcs = None, include_update = True):
+def bzlformat(name = None, srcs = None, include_update = True):
+    if name == None:
+        name = "bzlformat"
+
     if srcs == None:
         srcs = native.glob(["*.bzl", "BUILD", "BUILD.bazel"])
 
