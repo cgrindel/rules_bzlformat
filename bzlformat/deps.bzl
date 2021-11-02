@@ -15,10 +15,10 @@ def bzlformat_rules_dependencies():
 
     maybe(
         http_archive,
-        name = "cgrindel_rules_updatesrc",
-        sha256 = "18eb6620ac4684c2bc722b8fe447dfaba76f73d73e2dfcaf837f542379ed9bc3",
-        strip_prefix = "rules_updatesrc-0.1.0",
-        urls = ["https://github.com/cgrindel/rules_updatesrc/archive/v0.1.0.tar.gz"],
+        name = "cgrindel_bazel_starlib",
+        sha256 = "1f5c6b13243a1a6f79742a8a0e883f7f4591f7890a388f87c8323f4242dc718d",
+        strip_prefix = "bazel-starlib-0.1.0",
+        urls = ["https://github.com/cgrindel/bazel-starlib/archive/v0.1.0.tar.gz"],
     )
 
     maybe(
@@ -31,10 +31,10 @@ def bzlformat_rules_dependencies():
 
     maybe(
         http_archive,
-        name = "cgrindel_bazel_starlib",
-        sha256 = "1f5c6b13243a1a6f79742a8a0e883f7f4591f7890a388f87c8323f4242dc718d",
-        strip_prefix = "bazel-starlib-0.1.0",
-        urls = ["https://github.com/cgrindel/bazel-starlib/archive/v0.1.0.tar.gz"],
+        name = "cgrindel_rules_updatesrc",
+        sha256 = "18eb6620ac4684c2bc722b8fe447dfaba76f73d73e2dfcaf837f542379ed9bc3",
+        strip_prefix = "rules_updatesrc-0.1.0",
+        urls = ["https://github.com/cgrindel/rules_updatesrc/archive/v0.1.0.tar.gz"],
     )
 
     # Buildifier Deps
