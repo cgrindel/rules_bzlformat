@@ -75,18 +75,8 @@ updatesrc_update_all(
 
 The
 [`updatesrc_update_all`](https://github.com/cgrindel/rules_updatesrc/blob/main/doc/rules_and_macros_overview.md#updatesrc_update_all)
-macro defines a runnable target that copies all of the formatted Swift source files to the workspace
-directory.
-
-
-```python
-load(
-    "@cgrindel_rules_updatesrc//updatesrc:updatesrc.bzl",
-    "updatesrc_update_all",
-)
-
-updatesrc_update_all(name = "update_all")
-```
+macro defines a runnable target that copies all of the formatted Starlark source files to the
+workspace directory.
 
 ### 3. Add `bzlformat_pkg` to every Bazel package
 
@@ -105,15 +95,15 @@ bzlformat_pkg(
 ```
 
 The [`bzlformat_pkg`](/doc/rules_and_macros_overview.md#bzlformat_pkg) macro defines targets for a
-Bazel package which will format the Starlark source files, test that the formatted files are in the
+Bazel package that will format the Starlark source files, test that the formatted files are in the
 workspace directory and copies the formatted files to the workspace directory.
 
 A quick way to update all of your Bazel packages is to use
-[Buildozer](https://github.com/bazelbuild/buildtools/blob/master/buildozer/README.md). The following
+[Buildozer](https://github.com/bazelbuild/buildtools/blob/master/buildozer). The following
 will add the `bzlformat_pkg` load statements and declarations:
 
 ```sh
-# 
+# Use Buildozer to add the bzlformat_pkg load and declaration to every Bazel package.
 $ buildozer \
   'new_load @cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl bzlformat_pkg' \
   'new bzlformat_pkg bzlformat' \
