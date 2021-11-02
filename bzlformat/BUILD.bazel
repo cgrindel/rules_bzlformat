@@ -1,0 +1,17 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+
+package(default_visibility = ["//visibility:public"])
+
+bzl_library(
+    name = "deps",
+    srcs = ["deps.bzl"],
+)
+
+bzl_library(
+    name = "bzlformat",
+    srcs = ["bzlformat.bzl"],
+    deps = [
+        "//bzlformat/internal:bzlformat_format",
+        "//bzlformat/internal:bzlformat_pkg",
+    ],
+)
