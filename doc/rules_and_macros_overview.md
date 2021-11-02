@@ -38,7 +38,7 @@ Formats Starlark source files using Buildifier.
 bzlformat_pkg(<a href="#bzlformat_pkg-name">name</a>, <a href="#bzlformat_pkg-srcs">srcs</a>, <a href="#bzlformat_pkg-format_visibility">format_visibility</a>, <a href="#bzlformat_pkg-update_visibility">update_visibility</a>)
 </pre>
 
-Defines targets that will format, test, update the specified Starlark source files.
+Defines targets that format, test, and update the specified Starlark source files.
 
 NOTE: Any labels detected in the `srcs` will be ignored.
 

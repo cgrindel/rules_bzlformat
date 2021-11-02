@@ -1,13 +1,13 @@
-load("@cgrindel_bazel_starlib//lib:src_utils.bzl", "src_utils")
 load(":bzlformat_format.bzl", "bzlformat_format")
+load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
+load("@cgrindel_bazel_starlib//lib:src_utils.bzl", "src_utils")
 load(
     "@cgrindel_rules_updatesrc//updatesrc:updatesrc.bzl",
     "updatesrc_update",
 )
-load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 
 def bzlformat_pkg(name = "bzlformat", srcs = None, format_visibility = None, update_visibility = None):
-    """Defines targets that will format, test, update the specified Starlark source files.
+    """Defines targets that format, test, and update the specified Starlark source files.
 
     NOTE: Any labels detected in the `srcs` will be ignored.
 
