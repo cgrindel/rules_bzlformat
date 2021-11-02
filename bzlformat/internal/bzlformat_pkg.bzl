@@ -6,12 +6,24 @@ load(
 )
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 
-# TODO: Add documentation
+def bzlformat_pkg(name = "bzlformat", srcs = None, format_visibility = None, update_visibility = None):
+    """Defines targets that will format, test, update the specified Starlark source files.
 
-def bzlformat_pkg(name = None, srcs = None, format_visibility = None, update_visibility = None):
-    if name == None:
-        name = "bzlformat"
+    NOTE: Any labels detected in the `srcs` will be ignored.
 
+    Args:
+        name: The prefix `string` that is used when creating the targets.
+        srcs: Optional. A `list` of Starlark source files. If no value is
+              provided, any files that match `*.bzl`, `BUILD` or `BUILD.bazel`
+              are used.
+        format_visibility: Optional. A `list` of Bazel visibility declarations
+                           for the format targets.
+        update_visibility: Optional. A `list` of Bazel visibility declarations
+                           for the update target.
+
+    Returns:
+        None.
+    """
     if srcs == None:
         srcs = native.glob(["*.bzl", "BUILD", "BUILD.bazel"])
 

@@ -38,15 +38,15 @@ bzlformat_format = rule(
         ),
         "output_suffix": attr.string(
             default = ".formatted",
-            doc = "The suffix to add to the output filename.",
+            doc = "The suffix added to the formatted output filename.",
         ),
         "_buildifier": attr.label(
             default = "@cgrindel_rules_bzlformat//scripts:buildifier",
             executable = True,
             cfg = "host",
             allow_files = True,
-            doc = "The `buildifier` script.",
+            doc = "The `buildifier` script that executes the formatting.",
         ),
     },
-    doc = "Formats Starlark source files using buildifier.",
+    doc = "Formats Starlark source files using Buildifier.",
 )
