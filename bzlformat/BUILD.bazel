@@ -12,5 +12,6 @@ bzl_library(
     srcs = ["bzlformat.bzl"],
     deps = [
         "//bzlformat/internal:bzlformat_format",
+        "//bzlformat/internal:bzlformat_pkg",
     ],
 )
