@@ -78,3 +78,10 @@ def bzlformat_rules_dependencies():
             "https://github.com/bazelbuild/buildtools/archive/refs/tags/4.2.2.tar.gz",
         ],
     )
+
+    # TODO: FIX
+    maybe(
+        native.local_repository,
+        name = "cgrindel_rules_bazel_integration_test",
+        path = "/Users/chuck/code/cgrindel/rules_bazel_integration_test",
+    )

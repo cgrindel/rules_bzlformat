@@ -21,3 +21,9 @@ bzl_library(
         "@cgrindel_rules_updatesrc//updatesrc",
     ],
 )
+
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)
