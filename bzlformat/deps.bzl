@@ -78,3 +78,11 @@ def bzlformat_rules_dependencies():
             "https://github.com/bazelbuild/buildtools/archive/refs/tags/4.2.2.tar.gz",
         ],
     )
+
+    maybe(
+        http_archive,
+        name = "cgrindel_rules_bazel_integration_test",
+        sha256 = "4fa679d98318df3e280e9c8b7f445cd06de7954aa0454702a62ebab8c820ce7e",
+        strip_prefix = "rules_bazel_integration_test-0.1.0",
+        urls = ["https://github.com/cgrindel/rules_bazel_integration_test/archive/v0.1.0.tar.gz"],
+    )
