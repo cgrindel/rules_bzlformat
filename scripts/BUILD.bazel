@@ -11,3 +11,5 @@ filegroup(
     srcs = glob(["*"]),
     visibility = ["//:__subpackages__"],
 )
+
+exports_files(["update_pkgs.sh"])
