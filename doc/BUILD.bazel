@@ -17,6 +17,7 @@ _RULES_AND_MACROS_DOC_PROVIDER = doc_providers.create(
     symbols = [
         "bzlformat_format",
         "bzlformat_pkg",
+        "bzlformat_update_pkgs",
     ],
     deps = ["//bzlformat"],
 )

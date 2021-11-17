@@ -86,3 +86,11 @@ def bzlformat_rules_dependencies():
         strip_prefix = "rules_bazel_integration_test-0.1.0",
         urls = ["https://github.com/cgrindel/rules_bazel_integration_test/archive/v0.1.0.tar.gz"],
     )
+
+    maybe(
+        http_archive,
+        name = "cgrindel_bazel_shlib",
+        sha256 = "0f34e490950338894851c1427c9a2b783bcb699fcee8185b4d7c07e253923f67",
+        strip_prefix = "bazel_shlib-0.1.0",
+        urls = ["https://github.com/cgrindel/bazel_shlib/archive/v0.1.0.tar.gz"],
+    )

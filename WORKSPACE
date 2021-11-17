@@ -43,6 +43,12 @@ load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 
 protobuf_deps()
 
+# MARK: - bazel_shlib
+
+load("@cgrindel_bazel_shlib//:deps.bzl", "shlib_rules_dependencies")
+
+shlib_rules_dependencies()
+
 # MARK: - Integration Testing
 
 load("@cgrindel_rules_bazel_integration_test//bazel_integration_test:deps.bzl", "bazel_integration_test_rules_dependencies")

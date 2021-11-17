@@ -13,6 +13,7 @@ bzl_library(
     deps = [
         "//bzlformat/internal:bzlformat_format",
         "//bzlformat/internal:bzlformat_pkg",
+        "//bzlformat/internal:bzlformat_update_pkgs",
     ],
 )
 

@@ -8,6 +8,7 @@ On this page:
 
   * [bzlformat_format](#bzlformat_format)
   * [bzlformat_pkg](#bzlformat_pkg)
+  * [bzlformat_update_pkgs](#bzlformat_update_pkgs)
 
 
 <a id="#bzlformat_format"></a>
@@ -56,5 +57,23 @@ NOTE: Any labels detected in the `srcs` will be ignored.
 **RETURNS**
 
 None.
+
+
+<a id="#bzlformat_update_pkgs"></a>
+
+## bzlformat_update_pkgs
+
+<pre>
+bzlformat_update_pkgs(<a href="#bzlformat_update_pkgs-name">name</a>)
+</pre>
+
+
+
+**PARAMETERS**
+
+
+| Name  | Description | Default Value |
+| :------------- | :------------- | :------------- |
+| <a id="bzlformat_update_pkgs-name"></a>name |  <p align="center"> - </p>   |  <code>"bzlformat_update_pkgs"</code> |
 
 
