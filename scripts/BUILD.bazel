@@ -12,4 +12,7 @@ filegroup(
     visibility = ["//:__subpackages__"],
 )
 
-exports_files(["update_pkgs.sh"])
+exports_files([
+    "update_pkgs.sh",
+    "find_missing_pkgs.sh",
+])

@@ -14,6 +14,14 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 arrays_lib="$(rlocation cgrindel_bazel_shlib/lib/arrays.sh)"
 source "${arrays_lib}"
 
+find_missing_pkgs_bin="$(rlocation cgrindel_rules_bzlformat/scripts/find_missing_pkgs.sh)"
+buildozer="$(rlocation com_github_bazelbuild_buildtools/buildozer/buildozer_/buildozer)"
+# buildifier="$(rlocation com_github_bazelbuild_buildtools/buildifier/buildifier_/buildifier)"
+
+# DEBUG BEGIN
+echo >&2 "*** CHUCK  find_missing_pkgs_bin: ${find_missing_pkgs_bin}" 
+# DEBUG END
+
 query_for_pkgs() { 
   local query=${1}
   # Add a prefix (/) so that we can detect the root package.
@@ -22,26 +30,30 @@ query_for_pkgs() {
 
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
-# The output `package` appears to sort the results
-all_pkgs=( $(query_for_pkgs //...) )
-pkgs_with_format=( $(query_for_pkgs 'kind(bzlformat_format, //...)') )
+missing_pkgs=( $(. "${find_missing_pkgs_bin}") )
 
 # DEBUG BEGIN
-echo >&2 "*** CHUCK  all_pkgs:"
-for (( i = 0; i < ${#all_pkgs[@]}; i++ )); do
-  echo >&2 "*** CHUCK   ${i}: ${all_pkgs[${i}]}"
-done
-echo >&2 "*** CHUCK  pkgs_with_format:"
-for (( i = 0; i < ${#pkgs_with_format[@]}; i++ )); do
-  echo >&2 "*** CHUCK   ${i}: ${pkgs_with_format[${i}]}"
-done
+echo >&2 "*** CHUCK  missing_pkgs[@]: ${missing_pkgs[@]}" 
 # DEBUG END
 
-# TODO: Not handling root (empty package).
+# # The output `package` appears to sort the results
+# all_pkgs=( $(query_for_pkgs //...) )
+# pkgs_with_format=( $(query_for_pkgs 'kind(bzlformat_format, //...)') )
 
-pkgs_missing_format=()
-for pkg in "${all_pkgs[@]}" ; do
-  contains_item "${pkg}" "${pkgs_with_format[@]}" || pkgs_missing_format+=( "${pkg}" )
-done
+# # DEBUG BEGIN
+# echo >&2 "*** CHUCK  all_pkgs:"
+# for (( i = 0; i < ${#all_pkgs[@]}; i++ )); do
+#   echo >&2 "*** CHUCK   ${i}: ${all_pkgs[${i}]}"
+# done
+# echo >&2 "*** CHUCK  pkgs_with_format:"
+# for (( i = 0; i < ${#pkgs_with_format[@]}; i++ )); do
+#   echo >&2 "*** CHUCK   ${i}: ${pkgs_with_format[${i}]}"
+# done
+# # DEBUG END
 
-print_by_line "${pkgs_missing_format[@]}"
+# pkgs_missing_format=()
+# for pkg in "${all_pkgs[@]}" ; do
+#   contains_item "${pkg}" "${pkgs_with_format[@]}" || pkgs_missing_format+=( "${pkg}" )
+# done
+
+# print_by_line "${pkgs_missing_format[@]}"
