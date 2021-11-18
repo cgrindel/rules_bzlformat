@@ -14,40 +14,6 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 arrays_lib="$(rlocation cgrindel_bazel_shlib/lib/arrays.sh)"
 source "${arrays_lib}"
 
-# contains_item() {
-#   local expected="${1}"
-#   shift
-#   # Do a quick regex to see if the value is in the rest of the args
-#   # If not, then don't bother looping
-#   [[ ! "${*}" =~ "${expected}" ]] && echo "false" && return
-#   # Loop through items for a precise match
-#   for item in "${@}" ; do
-#     [[ "${item}" == "${expected}" ]] && echo "true" && return
-#   done
-#   # We did not find the item
-#   echo "false"
-# }
-
-contains_item() {
-  local expected="${1}"
-  shift
-  # Do a quick regex to see if the value is in the rest of the args
-  # If not, then don't bother looping
-  [[ ! "${*}" =~ "${expected}" ]] && return -1
-  # Loop through items for a precise match
-  for item in "${@}" ; do
-    [[ "${item}" == "${expected}" ]] && return 0
-  done
-  # We did not find the item
-  return -1
-}
-
-# print_by_line() {
-#   for item in "${@:-}" ; do
-#     echo "${item}"
-#   done
-# }
-
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
 # Query for any 'updatesrc_update' targets
