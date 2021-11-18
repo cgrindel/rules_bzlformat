@@ -24,8 +24,8 @@ echo >&2 "*** CHUCK  find_missing_pkgs_bin: ${find_missing_pkgs_bin}"
 
 query_for_pkgs() { 
   local query=${1}
-  # Add a prefix (/) so that we can detect the root package.
-  bazel query "${query}" --output package | sed -e 's|^|/|'
+  # Add a prefix (//) so that we can detect the root package.
+  bazel query "${query}" --output package | sed -e 's|^|//|'
 }
 
 cd "${BUILD_WORKSPACE_DIRECTORY}"
@@ -33,27 +33,22 @@ cd "${BUILD_WORKSPACE_DIRECTORY}"
 missing_pkgs=( $(. "${find_missing_pkgs_bin}") )
 
 # DEBUG BEGIN
-echo >&2 "*** CHUCK  missing_pkgs[@]: ${missing_pkgs[@]}" 
+echo >&2 "*** CHUCK  missing_pkgs[@]: ${missing_pkgs[@]}:__pkg__" 
 # DEBUG END
 
-# # The output `package` appears to sort the results
-# all_pkgs=( $(query_for_pkgs //...) )
-# pkgs_with_format=( $(query_for_pkgs 'kind(bzlformat_format, //...)') )
+buildozer_cmds=()
+buildozer_cmds+=( 'fix movePackageToTop' )
+buildozer_cmds+=( 'new_load @cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl bzlformat_pkg' )
+buildozer_cmds+=( 'new bzlformat_pkg bzlformat' )
+buildozer_cmds+=( 'fix unusedLoads' )
 
-# # DEBUG BEGIN
-# echo >&2 "*** CHUCK  all_pkgs:"
-# for (( i = 0; i < ${#all_pkgs[@]}; i++ )); do
-#   echo >&2 "*** CHUCK   ${i}: ${all_pkgs[${i}]}"
-# done
-# echo >&2 "*** CHUCK  pkgs_with_format:"
-# for (( i = 0; i < ${#pkgs_with_format[@]}; i++ )); do
-#   echo >&2 "*** CHUCK   ${i}: ${pkgs_with_format[${i}]}"
-# done
-# # DEBUG END
+missing_pkgs_args=()
+for pkg in "${missing_pkgs[@]}" ; do
+  missing_pkgs_args+=( "${pkg}:__pkg__" )
+done
 
-# pkgs_missing_format=()
-# for pkg in "${all_pkgs[@]}" ; do
-#   contains_item "${pkg}" "${pkgs_with_format[@]}" || pkgs_missing_format+=( "${pkg}" )
-# done
+# DEBUG BEGIN
+set -x
+# DEBUG END
 
-# print_by_line "${pkgs_missing_format[@]}"
+"${buildozer}" "${buildozer_cmds[@]}" "${missing_pkgs_args[@]}"
