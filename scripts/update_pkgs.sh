@@ -14,15 +14,17 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 arrays_lib="$(rlocation cgrindel_bazel_shlib/lib/arrays.sh)"
 source "${arrays_lib}"
 
+query_for_pkgs() { 
+  local query=${1}
+  # Add a prefix (/) so that we can detect the root package.
+  bazel query "${query}" --output package | sed -e 's|^|/|'
+}
+
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
-# Query for any 'updatesrc_update' targets
-# bazel_query="kind(updatesrc_update, //...)"
-# targets_to_run+=( $(bazel query "${bazel_query}" | sort) )
-
 # The output `package` appears to sort the results
-all_pkgs=( $(bazel query //... --output package) )
-pkgs_with_format=( $(bazel query 'kind(bzlformat_format, //...)' --output package) )
+all_pkgs=( $(query_for_pkgs //...) )
+pkgs_with_format=( $(query_for_pkgs 'kind(bzlformat_format, //...)') )
 
 # DEBUG BEGIN
 echo >&2 "*** CHUCK  all_pkgs:"
