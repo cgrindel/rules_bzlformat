@@ -16,24 +16,16 @@ source "${arrays_lib}"
 
 find_missing_pkgs_bin="$(rlocation cgrindel_rules_bzlformat/scripts/find_missing_pkgs.sh)"
 buildozer="$(rlocation com_github_bazelbuild_buildtools/buildozer/buildozer_/buildozer)"
-# buildifier="$(rlocation com_github_bazelbuild_buildtools/buildifier/buildifier_/buildifier)"
-
-# DEBUG BEGIN
-echo >&2 "*** CHUCK  find_missing_pkgs_bin: ${find_missing_pkgs_bin}" 
-# DEBUG END
-
-query_for_pkgs() { 
-  local query=${1}
-  # Add a prefix (//) so that we can detect the root package.
-  bazel query "${query}" --output package | sed -e 's|^|//|'
-}
 
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
 missing_pkgs=( $(. "${find_missing_pkgs_bin}") )
 
 # DEBUG BEGIN
-echo >&2 "*** CHUCK  missing_pkgs[@]: ${missing_pkgs[@]}:__pkg__" 
+echo >&2 "*** CHUCK  missing_pkgs:"
+for (( i = 0; i < ${#missing_pkgs[@]}; i++ )); do
+  echo >&2 "*** CHUCK   ${i}: ${missing_pkgs[${i}]}"
+done
 # DEBUG END
 
 buildozer_cmds=()

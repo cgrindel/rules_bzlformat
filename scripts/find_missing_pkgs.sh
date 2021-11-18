@@ -17,7 +17,7 @@ source "${arrays_lib}"
 query_for_pkgs() { 
   local query=${1}
   # Add a prefix (/) so that we can detect the root package.
-  bazel query "${query}" --output package | sed -e 's|^|/|'
+  bazel query "${query}" --output package | sed -e 's|^|//|'
 }
 
 cd "${BUILD_WORKSPACE_DIRECTORY}"

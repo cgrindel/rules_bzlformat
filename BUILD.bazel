@@ -5,7 +5,7 @@ load(
 )
 load("//bzlformat:bzlformat.bzl", "bzlformat_pkg", "bzlformat_update_pkgs")
 
-bzlformat_pkg(name = "bzlformat")
+# bzlformat_pkg(name = "bzlformat")
 
 updatesrc_update_all(
     name = "update_all",
