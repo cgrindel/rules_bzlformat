@@ -17,9 +17,29 @@ source "${arrays_lib}"
 find_missing_pkgs_bin="$(rlocation cgrindel_rules_bzlformat/scripts/find_missing_pkgs.sh)"
 buildozer="$(rlocation com_github_bazelbuild_buildtools/buildozer/buildozer_/buildozer)"
 
+exclude_pkgs=()
+args=()
+while (("$#")); do
+  case "${1}" in
+    "--exclude")
+      exclude_pkgs+=( $(normalize_pkg "${2}") )
+      shift 2
+      ;;
+    *)
+      args+=("${1}")
+      shift 1
+      ;;
+  esac
+done
+
+
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
-missing_pkgs=( $(. "${find_missing_pkgs_bin}") )
+find_args=()
+for pkg in "${exclude_pkgs[@]}" ; do
+  
+done
+missing_pkgs=( $(. "${find_missing_pkgs_bin}" "${find_args[@]:-}") )
 
 # DEBUG BEGIN
 echo >&2 "*** CHUCK  missing_pkgs:"

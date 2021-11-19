@@ -64,16 +64,10 @@ None.
 ## bzlformat_update_pkgs
 
 <pre>
-bzlformat_update_pkgs(<a href="#bzlformat_update_pkgs-name">name</a>)
+bzlformat_update_pkgs()
 </pre>
 
 
 
-**PARAMETERS**
-
-
-| Name  | Description | Default Value |
-| :------------- | :------------- | :------------- |
-| <a id="bzlformat_update_pkgs-name"></a>name |  <p align="center"> - </p>   |  <code>"bzlformat_update_pkgs"</code> |
 
 
