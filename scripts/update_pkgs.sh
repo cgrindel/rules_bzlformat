@@ -41,13 +41,6 @@ for pkg in "${exclude_pkgs[@]}" ; do
 done
 missing_pkgs=( $(. "${find_missing_pkgs_bin}" "${find_args[@]:-}") )
 
-# DEBUG BEGIN
-echo >&2 "*** CHUCK  missing_pkgs:"
-for (( i = 0; i < ${#missing_pkgs[@]}; i++ )); do
-  echo >&2 "*** CHUCK   ${i}: ${missing_pkgs[${i}]}"
-done
-# DEBUG END
-
 buildozer_cmds=()
 buildozer_cmds+=( 'fix movePackageToTop' )
 buildozer_cmds+=( 'new_load @cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl bzlformat_pkg' )
@@ -59,8 +52,5 @@ for pkg in "${missing_pkgs[@]}" ; do
   missing_pkgs_args+=( "${pkg}:__pkg__" )
 done
 
-# DEBUG BEGIN
-set -x
-# DEBUG END
-
+[[ ${#missing_pkgs_args[@]} == 0 ]] && exit
 "${buildozer}" "${buildozer_cmds[@]}" "${missing_pkgs_args[@]}"
