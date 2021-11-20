@@ -37,7 +37,7 @@ cd "${BUILD_WORKSPACE_DIRECTORY}"
 
 find_args=()
 for pkg in "${exclude_pkgs[@]}" ; do
-  
+  find_args+=(--exclude "${pkg}")
 done
 missing_pkgs=( $(. "${find_missing_pkgs_bin}" "${find_args[@]:-}") )
 

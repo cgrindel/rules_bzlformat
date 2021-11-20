@@ -1,11 +1,3 @@
-sh_binary(
-    name = "buildifier",
-    srcs = ["buildifier.sh"],
-    data = ["@com_github_bazelbuild_buildtools//buildifier"],
-    visibility = ["//visibility:public"],
-    deps = ["@bazel_tools//tools/bash/runfiles"],
-)
-
 sh_library(
     name = "common",
     srcs = ["common.sh"],
@@ -27,7 +19,36 @@ filegroup(
     visibility = ["//:__subpackages__"],
 )
 
-exports_files([
-    "update_pkgs.sh",
-    "find_missing_pkgs.sh",
-])
+# MARK: - Binaries
+
+sh_binary(
+    name = "buildifier",
+    srcs = ["buildifier.sh"],
+    data = ["@com_github_bazelbuild_buildtools//buildifier"],
+    visibility = ["//visibility:public"],
+    deps = ["@bazel_tools//tools/bash/runfiles"],
+)
+
+sh_binary(
+    name = "find_missing_pkgs",
+    srcs = ["find_missing_pkgs.sh"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_shlib//lib:arrays",
+    ],
+)
+
+sh_binary(
+    name = "update_pkgs",
+    srcs = ["update_pkgs.sh"],
+    data = [
+        ":find_missing_pkgs",
+        "@com_github_bazelbuild_buildtools//buildozer",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_shlib//lib:arrays",
+    ],
+)

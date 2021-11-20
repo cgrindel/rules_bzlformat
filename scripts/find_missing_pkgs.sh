@@ -14,11 +14,20 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 arrays_lib="$(rlocation cgrindel_bazel_shlib/lib/arrays.sh)"
 source "${arrays_lib}"
 
-query_for_pkgs() { 
-  local query=${1}
-  # Add a prefix (/) so that we can detect the root package.
-  bazel query "${query}" --output package | sed -e 's|^|//|'
-}
+exclude_pkgs=()
+args=()
+while (("$#")); do
+  case "${1}" in
+    "--exclude")
+      exclude_pkgs+=( $(normalize_pkg "${2}") )
+      shift 2
+      ;;
+    *)
+      args+=("${1}")
+      shift 1
+      ;;
+  esac
+done
 
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
