@@ -19,12 +19,6 @@ source "${common_lib}"
 
 query_for_pkgs() {
   local query="${1}"
-
-  # local results=( $(bazel query "${query}" --output package | sed -e 's|^|//|') )
-  # for item in "${results[@]}" ; do
-  #   echo "$(normalize_pkg "${item}")"
-  # done
-
   # We need to add a prefix here (//). Otherwise, the root package would be an 
   # empty string. Empty strings are easily loss in Bash.
   bazel query "${query}" --output package | sed -e 's|^|//|'
