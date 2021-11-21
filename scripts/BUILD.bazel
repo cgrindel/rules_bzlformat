@@ -34,8 +34,8 @@ sh_binary(
 )
 
 sh_binary(
-    name = "update_pkgs",
-    srcs = ["update_pkgs.sh"],
+    name = "update_missing_pkgs",
+    srcs = ["update_missing_pkgs.sh"],
     data = [
         ":find_missing_pkgs",
         "@com_github_bazelbuild_buildtools//buildozer",

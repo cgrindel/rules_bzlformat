@@ -16,6 +16,6 @@ def bzlformat_update_pkgs(name = "bzlformat_pkgs", exclude = []):
 
     execute_binary(
         name = name + "_update_missing",
-        binary = "@cgrindel_rules_bzlformat//scripts:update_pkgs",
+        binary = "@cgrindel_rules_bzlformat//scripts:update_missing_pkgs",
         args = exclude_args,
     )
