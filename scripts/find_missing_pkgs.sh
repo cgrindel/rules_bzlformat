@@ -45,9 +45,12 @@ cd "${BUILD_WORKSPACE_DIRECTORY}"
 all_pkgs=( $(query_for_pkgs //...) )
 pkgs_with_format=( $(query_for_pkgs 'kind(bzlformat_format, //...)') )
 
+
 pkgs_missing_format=()
 for pkg in "${all_pkgs[@]}" ; do
-  contains_item "${pkg}" "${pkgs_with_format[@]}" || pkgs_missing_format+=( "${pkg}" )
+  if ! contains_item "${pkg}" "${pkgs_with_format[@]:-}" && ! contains_item "${pkg}" "${exclude_pkgs[@]:-}"; then
+    pkgs_missing_format+=( "${pkg}" )
+  fi
 done
 
-print_by_line "${pkgs_missing_format[@]}"
+print_by_line "${pkgs_missing_format[@]:-}"

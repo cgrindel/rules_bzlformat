@@ -42,4 +42,7 @@ filegroup(
     visibility = ["//:__subpackages__"],
 )
 
-bzlformat_update_pkgs()
+bzlformat_update_pkgs(
+    # Exclude the package that defines bzlformat_pkg.
+    exclude = ["//bzlformat/internal"],
+)
