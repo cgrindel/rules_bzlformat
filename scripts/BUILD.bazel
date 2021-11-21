@@ -1,22 +1,15 @@
-sh_library(
-    name = "common",
-    srcs = ["common.sh"],
-)
-
-sh_test(
-    name = "normalize_pkg_test",
-    srcs = ["normalize_pkg_test.sh"],
-    deps = [
-        ":common",
-        "@bazel_tools//tools/bash/runfiles",
-        "@cgrindel_bazel_shlib//lib:assertions",
-    ],
-)
-
 filegroup(
     name = "all_files",
     srcs = glob(["*"]),
     visibility = ["//:__subpackages__"],
+)
+
+# MARK: - Shared Libraries
+
+sh_library(
+    name = "common",
+    srcs = ["common.sh"],
+    visibility = ["//tests/scripts:__subpackages__"],
 )
 
 # MARK: - Binaries
