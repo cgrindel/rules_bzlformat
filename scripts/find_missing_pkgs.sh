@@ -29,7 +29,7 @@ args=()
 while (("$#")); do
   case "${1}" in
     "--exclude")
-      exclude_pkgs+=( $(normalize_pkg "${2}") )
+      exclude_pkgs+=( "$(normalize_pkg "${2}")" )
       shift 2
       ;;
     *)
