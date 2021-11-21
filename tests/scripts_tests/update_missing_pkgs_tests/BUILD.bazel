@@ -1,0 +1,39 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+
+bzlformat_pkg(name = "bzlformat")
+
+sh_test(
+    name = "no_missing_pkgs_test",
+    srcs = ["no_missing_pkgs_test.sh"],
+    data = [
+        "//scripts:update_missing_pkgs",
+    ],
+    deps = [
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_shlib//lib:assertions",
+    ],
+)
+
+sh_test(
+    name = "missing_pkgs_test",
+    srcs = ["missing_pkgs_test.sh"],
+    data = [
+        "//scripts:update_missing_pkgs",
+    ],
+    deps = [
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_shlib//lib:assertions",
+    ],
+)
+
+sh_test(
+    name = "missing_pkgs_with_exclude_test",
+    srcs = ["missing_pkgs_with_exclude_test.sh"],
+    data = [
+        "//scripts:update_missing_pkgs",
+    ],
+    deps = [
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_shlib//lib:assertions",
+    ],
+)
