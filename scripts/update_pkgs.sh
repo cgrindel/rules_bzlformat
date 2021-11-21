@@ -41,16 +41,18 @@ for pkg in "${exclude_pkgs[@]}" ; do
 done
 missing_pkgs=( $(. "${find_missing_pkgs_bin}" "${find_args[@]:-}") )
 
+# If no missing packages, we are done.
+[[ ${#missing_pkgs[@]} == 0 ]] && exit
+
 buildozer_cmds=()
 buildozer_cmds+=( 'fix movePackageToTop' )
 buildozer_cmds+=( 'new_load @cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl bzlformat_pkg' )
 buildozer_cmds+=( 'new bzlformat_pkg bzlformat' )
 buildozer_cmds+=( 'fix unusedLoads' )
 
+# Execute the buildozer commands
 missing_pkgs_args=()
 for pkg in "${missing_pkgs[@]}" ; do
   missing_pkgs_args+=( "${pkg}:__pkg__" )
 done
-
-[[ ${#missing_pkgs_args[@]} == 0 ]] && exit
 "${buildozer}" "${buildozer_cmds[@]}" "${missing_pkgs_args[@]}"

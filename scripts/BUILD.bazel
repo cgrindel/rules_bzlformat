@@ -9,7 +9,7 @@ filegroup(
 sh_library(
     name = "common",
     srcs = ["common.sh"],
-    visibility = ["//tests/scripts:__subpackages__"],
+    visibility = ["//tests/scripts_tests/common_tests:__subpackages__"],
 )
 
 # MARK: - Binaries
