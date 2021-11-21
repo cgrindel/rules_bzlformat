@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+# Normalize a Bazel package name to `//path/to/package`.
+#
+# Args:
+#   pkg: A string representing a Bazel package.
+#
+# Outputs:
+#   stdout: A string representing a Bazel package.
+#   stderr: None.
 normalize_pkg() {
   # Strip any target specifications
   local pkg="${1%:*}"
