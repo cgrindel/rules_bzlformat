@@ -10,11 +10,22 @@ bzlformat_pkg(name = "bzlformat")
 
 # MARK: - Integration Tests
 
-# bazel_integration_tests(
-#     name = "missing_pkgs_test",
-#     bazel_versions = SUPPORTED_BAZEL_VERSIONS,
-#     test_runner_srcs = ["missing_pkgs_test.sh"],
-#     workspace_files = integration_test_utils.glob_workspace_files("workspace") + [
-#         "//:workspace_integration_test_files",
-#     ],
-# )
+bazel_integration_tests(
+    name = "missing_pkgs_test",
+    bazel_versions = SUPPORTED_BAZEL_VERSIONS,
+    test_runner_srcs = ["missing_pkgs_test.sh"],
+    workspace_files = integration_test_utils.glob_workspace_files("workspace") + [
+        "//:workspace_integration_test_files",
+    ],
+    workspace_path = "workspace",
+)
+
+test_suite(
+    name = "all_integration_tests",
+    tags = integration_test_utils.DEFAULT_INTEGRATION_TEST_TAGS,
+    tests = integration_test_utils.bazel_integration_test_names(
+        ":missing_pkgs_test",
+        SUPPORTED_BAZEL_VERSIONS,
+    ),
+    visibility = ["//:__subpackages__"],
+)
