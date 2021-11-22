@@ -1,0 +1,20 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+load(
+    "@cgrindel_rules_bazel_integration_test//bazel_integration_test:bazel_integration_test.bzl",
+    "bazel_integration_tests",
+    "integration_test_utils",
+)
+load("//:bazel_versions.bzl", "SUPPORTED_BAZEL_VERSIONS")
+
+bzlformat_pkg(name = "bzlformat")
+
+# MARK: - Integration Tests
+
+# bazel_integration_tests(
+#     name = "missing_pkgs_test",
+#     bazel_versions = SUPPORTED_BAZEL_VERSIONS,
+#     test_runner_srcs = ["missing_pkgs_test.sh"],
+#     workspace_files = integration_test_utils.glob_workspace_files("workspace") + [
+#         "//:workspace_integration_test_files",
+#     ],
+# )
