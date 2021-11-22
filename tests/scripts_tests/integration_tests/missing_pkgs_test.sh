@@ -15,16 +15,23 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 set -x
 # DEBUG END
 
-# assertions_lib="$(rlocation cgrindel_bazel_shlib/lib/assertions.sh)"
-assertions_lib="$(rlocation cgrindel_bazel_shlib/lib/assertions.sh)" || (echo >&2 "Failed to locate cgrindel_bazel_shlib/lib/assertions.sh" && exit 1)
+assertions_lib_location=cgrindel_bazel_shlib/lib/assertions.sh
+assertions_lib="$(rlocation "${assertions_lib_location}")" || \
+  (echo >&2 "Failed to locate ${assertions_lib_location}" && exit 1)
 source "${assertions_lib}"
-# [[ -f "${assertions_lib}" ]] && source "${assertions_lib}"
-# source "${assertions_lib}" || (echo >&2 "Failed to source ${assertions_lib}" && exit 1)
 
-paths_lib="$(rlocation cgrindel_bazel_shlib/lib/paths.sh)"
+# paths_lib="$(rlocation cgrindel_bazel_shlib/lib/paths.sh)"
+# source "${paths_lib}"
+
+paths_lib_location=cgrindel_bazel_shlib/lib/paths.sh
+paths_lib="$(rlocation "${paths_lib_location}")" || \
+  (echo >&2 "Failed to locate ${paths_lib_location}" && exit 1)
 source "${paths_lib}"
 
-messages_lib="$(rlocation cgrindel_bazel_shlib/lib/messages.sh)"
+# messages_lib="$(rlocation cgrindel_bazel_shlib/lib/messages.sh)"
+messages_lib_location=cgrindel_bazel_shlib/lib/messages.sh
+messages_lib="$(rlocation "${messages_lib_location}")" || \
+  (echo >&2 "Failed to locate ${messages_lib_location}" && exit 1)
 source "${messages_lib}"
 
 # Process args
