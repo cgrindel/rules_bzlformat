@@ -16,6 +16,8 @@ bazel_integration_tests(
     sh_deps = [
         "@bazel_tools//tools/bash/runfiles",
         "@cgrindel_bazel_shlib//lib:assertions",
+        "@cgrindel_bazel_shlib//lib:paths",
+        "@cgrindel_bazel_shlib//lib:messages",
     ],
     test_runner_srcs = ["missing_pkgs_test.sh"],
     workspace_files = integration_test_utils.glob_workspace_files("workspace") + [
