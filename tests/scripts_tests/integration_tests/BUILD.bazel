@@ -13,8 +13,12 @@ bzlformat_pkg(name = "bzlformat")
 bazel_integration_tests(
     name = "missing_pkgs_test",
     bazel_versions = SUPPORTED_BAZEL_VERSIONS,
+    sh_deps = [
+        "@bazel_tools//tools/bash/runfiles",
+    ],
     test_runner_srcs = ["missing_pkgs_test.sh"],
-    workspace_files = integration_test_utils.glob_workspace_files("workspace") + [
+    # workspace_files = integration_test_utils.glob_workspace_files("workspace") + [
+    workspace_files = glob(["workspace/**/*"]) + [
         "//:workspace_integration_test_files",
     ],
     workspace_path = "workspace",
