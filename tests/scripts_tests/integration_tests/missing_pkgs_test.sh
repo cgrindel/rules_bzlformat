@@ -11,28 +11,20 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
   { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v2 ---
 
-# DEBUG BEGIN
-set -x
-# DEBUG END
+assertions_sh_location=cgrindel_bazel_shlib/lib/assertions.sh
+assertions_sh="$(rlocation "${assertions_sh_location}")" || \
+  (echo >&2 "Failed to locate ${assertions_sh_location}" && exit 1)
+source "${assertions_sh}"
 
-assertions_lib_location=cgrindel_bazel_shlib/lib/assertions.sh
-assertions_lib="$(rlocation "${assertions_lib_location}")" || \
-  (echo >&2 "Failed to locate ${assertions_lib_location}" && exit 1)
-source "${assertions_lib}"
+paths_sh_location=cgrindel_bazel_shlib/lib/paths.sh
+paths_sh="$(rlocation "${paths_sh_location}")" || \
+  (echo >&2 "Failed to locate ${paths_sh_location}" && exit 1)
+source "${paths_sh}"
 
-# paths_lib="$(rlocation cgrindel_bazel_shlib/lib/paths.sh)"
-# source "${paths_lib}"
-
-paths_lib_location=cgrindel_bazel_shlib/lib/paths.sh
-paths_lib="$(rlocation "${paths_lib_location}")" || \
-  (echo >&2 "Failed to locate ${paths_lib_location}" && exit 1)
-source "${paths_lib}"
-
-# messages_lib="$(rlocation cgrindel_bazel_shlib/lib/messages.sh)"
-messages_lib_location=cgrindel_bazel_shlib/lib/messages.sh
-messages_lib="$(rlocation "${messages_lib_location}")" || \
-  (echo >&2 "Failed to locate ${messages_lib_location}" && exit 1)
-source "${messages_lib}"
+messages_sh_location=cgrindel_bazel_shlib/lib/messages.sh
+messages_sh="$(rlocation "${messages_sh_location}")" || \
+  (echo >&2 "Failed to locate ${messages_sh_location}" && exit 1)
+source "${messages_sh}"
 
 # Process args
 while (("$#")); do
