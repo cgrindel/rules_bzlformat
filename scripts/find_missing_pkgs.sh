@@ -20,7 +20,7 @@ source "${common_lib}"
 query_for_pkgs() {
   local query="${1}"
   # We need to add a prefix here (//). Otherwise, the root package would be an 
-  # empty string. Empty strings are easily loss in Bash.
+  # empty string. Empty strings are easily lost in Bash.
   bazel query "${query}" --output package | sed -e 's|^|//|'
 }
 
