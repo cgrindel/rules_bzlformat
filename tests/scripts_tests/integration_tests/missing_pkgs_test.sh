@@ -26,6 +26,10 @@ messages_sh="$(rlocation "${messages_sh_location}")" || \
   (echo >&2 "Failed to locate ${messages_sh_location}" && exit 1)
 source "${messages_sh}"
 
+buildozer_location=com_github_bazelbuild_buildtools/buildozer/buildozer_/buildozer
+buildozer="$(rlocation "${buildozer_location}")" || \
+  (echo >&2 "Failed to locate ${buildozer_location}" && exit 1)
+
 # Process args
 while (("$#")); do
   case "${1}" in
@@ -57,23 +61,23 @@ bazel="$(normalize_path "${bazel_rel_path}")"
 workspace_dir="$(dirname "${workspace_path}")"
 cd "${workspace_dir}"
 
-# # Add update packages declaration to the root build file
-# echo "
-# load(\"@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl\", \"bzlformat_pkg\", \"bzlformat_update_pkgs\")
-# bzlformat_update_pkgs()
-# " > BUILD.bazel
+# MARK - Find the missing packages
 
 missing_pkgs=( $("${bazel}" run "//:bzlformat_pkgs_find_missing") )
-
-# DEBUG BEGIN
-echo >&2 "*** CHUCK START" 
-tree
-echo >&2 "*** CHUCK  missing_pkgs: ${missing_pkgs[@]}" 
-# DEBUG END
-
 assert_equal 3 ${#missing_pkgs[@]} "Missing packages count."
 assert_equal "//" "${missing_pkgs[0]}" "Missing packages 0"
 assert_equal "//foo" "${missing_pkgs[1]}" "Missing packages 1"
 assert_equal "//foo/bar" "${missing_pkgs[2]}" "Missing packages 2"
+
+# MARK - Find the missing packages with exclusions
+
+# # Add exclusions to the bzlformat_update_pkgs
+"${buildozer}" 'add exclude //foo' //:bzlformat_pkgs
+
+missing_pkgs=( $("${bazel}" run "//:bzlformat_pkgs_find_missing") )
+assert_equal 2 ${#missing_pkgs[@]} "Missing packages count."
+assert_equal "//" "${missing_pkgs[0]}" "Missing packages 0"
+assert_equal "//foo/bar" "${missing_pkgs[1]}" "Missing packages 1"
+
 
 fail "IMPLEMENT ME!"

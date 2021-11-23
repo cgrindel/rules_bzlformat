@@ -21,6 +21,7 @@ updatesrc_update_all(
 )
 
 bzlformat_update_pkgs(
+    name = "bzlformat_pkgs",
     # Exclude the package that defines bzlformat_pkg.
     exclude = ["//bzlformat/internal"],
 )

@@ -1,6 +1,6 @@
 load("@cgrindel_bazel_shlib//rules:execute_binary.bzl", "execute_binary")
 
-def bzlformat_update_pkgs(name = "bzlformat_pkgs", exclude = []):
+def bzlformat_update_pkgs(name, exclude = []):
     exclude_args = []
     for pkg in exclude:
         exclude_args.extend(["--exclude", pkg])

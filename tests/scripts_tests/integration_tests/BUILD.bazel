@@ -13,6 +13,9 @@ bzlformat_pkg(name = "bzlformat")
 bazel_integration_tests(
     name = "missing_pkgs_test",
     bazel_versions = SUPPORTED_BAZEL_VERSIONS,
+    sh_data = [
+        "@com_github_bazelbuild_buildtools//buildozer",
+    ],
     sh_deps = [
         "@bazel_tools//tools/bash/runfiles",
         "@cgrindel_bazel_shlib//lib:assertions",
