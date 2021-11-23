@@ -1,1 +1,4 @@
-# Intentionally blank
+
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg", "bzlformat_update_pkgs")
+bzlformat_update_pkgs()
+

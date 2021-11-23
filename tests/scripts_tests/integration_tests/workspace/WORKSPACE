@@ -2,7 +2,7 @@ workspace(name = "missing_pkgs")
 
 local_repository(
     name = "cgrindel_rules_bzlformat",
-    path = "../..",
+    path = "../../../..",
 )
 
 load("@cgrindel_rules_bzlformat//bzlformat:deps.bzl", "bzlformat_rules_dependencies")
