@@ -57,30 +57,23 @@ bazel="$(normalize_path "${bazel_rel_path}")"
 workspace_dir="$(dirname "${workspace_path}")"
 cd "${workspace_dir}"
 
-# # Set a HOME var if one is not set. Avoids the following error:
-# #   could not get the user's cache directory: $HOME is not defined
-# [[ -n "${HOME:-}" ]] && export HOME="${PWD}"
-
-# Create the directories
-mkdir -p foo/bar
-
-# Add empty build files
-build_files=(BUILD.bazel foo/BUILD.bazel foo/bar/BUILD.bazel)
-for build_file in "${build_files[@]}" ; do
-  echo -n "" > "${build_file}"
-done
-
-# Add update packages declaration to the root build file
-echo "
-load(\"@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl\", \"bzlformat_pkg\", \"bzlformat_update_pkgs\")
-bzlformat_update_pkgs()
-" > BUILD.bazel
+# # Add update packages declaration to the root build file
+# echo "
+# load(\"@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl\", \"bzlformat_pkg\", \"bzlformat_update_pkgs\")
+# bzlformat_update_pkgs()
+# " > BUILD.bazel
 
 missing_pkgs=( $("${bazel}" run "//:bzlformat_pkgs_find_missing") )
 
-assert_equal 3 ${#missing_pkgs[@]}
-assert_equal "//" "${missing_pkgs[0]}"
-assert_equal "//foo" "${missing_pkgs[1]}"
-assert_equal "//foo/bar" "${missing_pkgs[2]}"
+# DEBUG BEGIN
+echo >&2 "*** CHUCK START" 
+tree
+echo >&2 "*** CHUCK  missing_pkgs: ${missing_pkgs[@]}" 
+# DEBUG END
+
+assert_equal 3 ${#missing_pkgs[@]} "Missing packages count."
+assert_equal "//" "${missing_pkgs[0]}" "Missing packages 0"
+assert_equal "//foo" "${missing_pkgs[1]}" "Missing packages 1"
+assert_equal "//foo/bar" "${missing_pkgs[2]}" "Missing packages 2"
 
 fail "IMPLEMENT ME!"

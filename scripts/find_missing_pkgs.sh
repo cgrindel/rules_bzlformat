@@ -45,6 +45,12 @@ cd "${BUILD_WORKSPACE_DIRECTORY}"
 all_pkgs=( $(query_for_pkgs //...) )
 pkgs_with_format=( $(query_for_pkgs 'kind(bzlformat_format, //...)') )
 
+# DEBUG BEGIN
+echo >&2 "*** CHUCK find_missing_pkgs all_pkgs:"
+for (( i = 0; i < ${#all_pkgs[@]}; i++ )); do
+  echo >&2 "*** CHUCK   ${i}: ${all_pkgs[${i}]}"
+done
+# DEBUG END
 
 pkgs_missing_format=()
 for pkg in "${all_pkgs[@]}" ; do
