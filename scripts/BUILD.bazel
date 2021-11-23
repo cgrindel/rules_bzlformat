@@ -42,6 +42,7 @@ sh_binary(
     ],
     visibility = ["//visibility:public"],
     deps = [
+        ":common",
         "@bazel_tools//tools/bash/runfiles",
         "@cgrindel_bazel_shlib//lib:arrays",
     ],

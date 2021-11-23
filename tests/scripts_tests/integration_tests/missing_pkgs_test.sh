@@ -61,13 +61,29 @@ bazel="$(normalize_path "${bazel_rel_path}")"
 workspace_dir="$(dirname "${workspace_path}")"
 cd "${workspace_dir}"
 
+# TODO: Backup files that are modified and restore on cleanup.
+
 # MARK - Find the missing packages
 
 missing_pkgs=( $("${bazel}" run "//:bzlformat_pkgs_find_missing") )
-assert_equal 3 ${#missing_pkgs[@]} "Missing packages count."
-assert_equal "//" "${missing_pkgs[0]}" "Missing packages 0"
-assert_equal "//foo" "${missing_pkgs[1]}" "Missing packages 1"
-assert_equal "//foo/bar" "${missing_pkgs[2]}" "Missing packages 2"
+
+# assert_msg="Missing packages count, no exclusions."
+# expected_array=(// //foo //foo/bar)
+# assert_equal 3 ${#missing_pkgs[@]} "${assert_msg}"
+# for (( i = 0; i < ${#expected_array[@]}; i++ )); do
+#   assert_equal "${expected_array[${i}]}" "${missing_pkgs[${i}]}" "${assert_msg}[${i}]"
+# done
+
+# assert_equal "//" "${missing_pkgs[0]}" "${assert_msg}[0]"
+# assert_equal "//foo" "${missing_pkgs[1]}" "${assert_msg}[1]"
+# assert_equal "//foo/bar" "${missing_pkgs[2]}" "${assert_msg}[2]"
+
+assert_msg="Missing packages, no exclusions"
+expected_array=(// //foo //foo/bar)
+assert_equal ${#expected_array[@]} ${#missing_pkgs[@]} "${assert_msg}"
+for (( i = 0; i < ${#expected_array[@]}; i++ )); do
+  assert_equal "${expected_array[${i}]}" "${missing_pkgs[${i}]}" "${assert_msg}[${i}]"
+done
 
 # MARK - Find the missing packages with exclusions
 
@@ -75,9 +91,17 @@ assert_equal "//foo/bar" "${missing_pkgs[2]}" "Missing packages 2"
 "${buildozer}" 'add exclude //foo' //:bzlformat_pkgs
 
 missing_pkgs=( $("${bazel}" run "//:bzlformat_pkgs_find_missing") )
-assert_equal 2 ${#missing_pkgs[@]} "Missing packages count."
+assert_equal 2 ${#missing_pkgs[@]} "Missing packages count, with exclusions."
 assert_equal "//" "${missing_pkgs[0]}" "Missing packages 0"
 assert_equal "//foo/bar" "${missing_pkgs[1]}" "Missing packages 1"
+
+# MARK - Update the missing packages with exclusions
+
+update_pkgs=( $("${bazel}" run "//:bzlformat_pkgs_update_missing") )
+assert_equal 3 ${#missing_pkgs[@]} "Updated packages count, with exclusions."
+assert_equal "Updating the following packages:" "${missing_pkgs[0]}" "Missing text."
+assert_equal "//" "${missing_pkgs[1]}" "Missing packages 1"
+assert_equal "//foo/bar" "${missing_pkgs[2]}" "Missing packages 2"
 
 
 fail "IMPLEMENT ME!"

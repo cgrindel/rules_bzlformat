@@ -14,6 +14,11 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 arrays_lib="$(rlocation cgrindel_bazel_shlib/lib/arrays.sh)"
 source "${arrays_lib}"
 
+common_sh_location=cgrindel_rules_bzlformat/scripts/common.sh
+common_sh="$(rlocation "${common_sh_location}")" || \
+  (echo >&2 "Failed to locate ${common_sh_location}" && exit 1)
+source "${common_sh}"
+
 find_missing_pkgs_bin="$(rlocation cgrindel_rules_bzlformat/scripts/find_missing_pkgs.sh)"
 buildozer="$(rlocation com_github_bazelbuild_buildtools/buildozer/buildozer_/buildozer)"
 
@@ -43,6 +48,11 @@ missing_pkgs=( $(. "${find_missing_pkgs_bin}" "${find_args[@]:-}") )
 
 # If no missing packages, we are done.
 [[ ${#missing_pkgs[@]} == 0 ]] && exit
+
+echo "Updating the following packages:"
+for pkg in "${missing_pkgs[@]}" ; do
+  echo "${pkg}"
+done
 
 buildozer_cmds=()
 buildozer_cmds+=( 'fix movePackageToTop' )
