@@ -65,7 +65,7 @@ cd "${workspace_dir}"
 # MARK - Create Scratch Directory
 
 # Create the scratch directory
-scratch_dir="$(normalize_path "${workspace_dir}/../scratch")"
+scratch_dir="$(normalize_path "${workspace_dir}/../$(basename "${workspace_dir}").scratch")"
 echo "scratch_dir: ${scratch_dir}" 
 rm -rf "${scratch_dir}"
 mkdir -p "${scratch_dir}"
@@ -78,7 +78,7 @@ find . -type f -name ".*" -print0 | xargs -0 -I '{}' cp '{}' "${scratch_dir}"
 
 cd "${scratch_dir}"
 
-# MARK - Find the missing packages
+# MARK - Find the missing packages without exclusions
 
 missing_pkgs=( $("${bazel}" run "//:bzlformat_pkgs_find_missing") )
 
@@ -91,7 +91,7 @@ done
 
 # MARK - Find the missing packages with exclusions
 
-# # Add exclusions to the bzlformat_update_pkgs
+# Add exclusions to the bzlformat_update_pkgs
 "${buildozer}" 'add exclude //foo' //:bzlformat_pkgs
 
 missing_pkgs=( $("${bazel}" run "//:bzlformat_pkgs_find_missing") )
@@ -114,4 +114,8 @@ for (( i = 0; i < ${#expected_array[@]}; i++ )); do
   assert_equal "${expected_array[${i}]}" "${update_pkgs[${i}]}" "${assert_msg}[${i}]"
 done
 
+# MARK - Update the missing wihtout exclusions
+
+# # Remove exclusions from the bzlformat_update_pkgs
+# "${buildozer}" 'add exclude //foo' //:bzlformat_pkgs
 
