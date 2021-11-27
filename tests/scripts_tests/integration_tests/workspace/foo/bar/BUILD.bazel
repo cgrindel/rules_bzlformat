@@ -1,4 +1,8 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+
 sh_binary(
     name = "bar",
     srcs = ["bar.sh"],
 )
+
+bzlformat_pkg(name = "bzlformat")

@@ -2,4 +2,7 @@ load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg", "bzl
 
 bzlformat_update_pkgs(
     name = "bzlformat_pkgs",
+    exclude = ["//foo"],
 )
+
+bzlformat_pkg(name = "bzlformat")
