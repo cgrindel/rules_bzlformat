@@ -62,92 +62,11 @@ bazel="$(normalize_path "${bazel_rel_path}")"
 workspace_dir="$(normalize_path "$(dirname "${workspace_path}")")"
 cd "${workspace_dir}"
 
-# DEBUG BEGIN
-echo >&2 "*** CHUCK  starting_path: ${starting_path}" 
-echo >&2 "*** CHUCK  workspace_dir: ${workspace_dir}" 
-echo >&2 "*** CHUCK WORKSPACE DIR" 
-tree
-# DEBUG END
-
-# MARK - Backup and Restore Workspace Files
-
-# files_to_backup=(BUILD.bazel foo/BUILD.bazel foo/bar/BUILD.bazel)
-
-# backup_filename() {
-#   local file="${1}"
-#   echo "${file}.BAK"
-# }
-
-# backup_file() {
-#   local file="${1}"
-#   local backup_file="$(backup_filename "${file}")"
-#   # [[ -f "${backup_file}" ]] && exit_with_msg "Backup file already exists. ${backup_file}"
-#   if [[ -L "${file}" ]]; then
-#     # For symlinks, rename the file and then copy it back.
-#     mv -f "${file}" "${backup_file}"
-#     restore_file "${file}"
-#   else
-#     cp -f "${file}" "${backup_file}"
-#   fi
-# }
-
-# backup_files() {
-#   files=()
-#   while (("$#")); do
-#     case "${1}" in
-#       *)
-#         files+=("${1}")
-#         shift 1
-#         ;;
-#     esac
-#   done
-#   [[ ${#files[@]} == 0 ]] && files=( "${files_to_backup[@]}" )
-#   for file in "${files[@]}" ; do
-#     backup_file "${file}"
-#   done
-# }
-
-# restore_file() {
-#   local file="${1}"
-#   local backup_file="$(backup_filename "${file}")"
-#   cp -f "${backup_file}" "${file}"
-# }
-
-# restore_files() {
-#   # DEBUG BEGIN
-#   set -x
-#   # DEBUG END
-#   files=()
-#   while (("$#")); do
-#     case "${1}" in
-#       *)
-#         files+=("${1}")
-#         shift 1
-#         ;;
-#     esac
-#   done
-#   [[ ${#files[@]} == 0 ]] && files=( "${files_to_backup[@]}" )
-#   for file in "${files[@]}" ; do
-#     restore_file "${file}"
-#   done
-# }
-
-# backup_files
-
-# cleanup() {
-#   # DEBUG BEGIN
-#   echo >&2 "*** CHUCK CLEANUP" 
-#   # DEBUG END
-#   restore_files
-# }
-# trap cleanup EXIT
-
 # MARK - Create Scratch Directory
 
 # Create the scratch directory
-# scratch_dir="$(mktemp -d -t missing_pkgs_test)" || exit_with_msg "Failed to create a scratch directory."
-# scratch_dir="${workspace_dir}/../scratch"
 scratch_dir="$(normalize_path "${workspace_dir}/../scratch")"
+echo "scratch_dir: ${scratch_dir}" 
 rm -rf "${scratch_dir}"
 mkdir -p "${scratch_dir}"
 
@@ -158,11 +77,6 @@ cp -R -L * "${scratch_dir}"
 find . -type f -name ".*" -print0 | xargs -0 -I '{}' cp '{}' "${scratch_dir}"
 
 cd "${scratch_dir}"
-
-# DEBUG BEGIN
-echo >&2 "*** CHUCK CREATED SCRATCH WORKSPACE" 
-tree -a "${scratch_dir}"
-# DEBUG END
 
 # MARK - Find the missing packages
 
@@ -191,20 +105,13 @@ done
 # MARK - Update the missing packages with exclusions
 
 update_pkgs=( $("${bazel}" run "//:bzlformat_pkgs_update_missing") )
-# DEBUG BEGIN
-echo >&2 "*** CHUCK  update_pkgs:"
-for (( i = 0; i < ${#update_pkgs[@]}; i++ )); do
-  echo >&2 "*** CHUCK   ${i}: ${update_pkgs[${i}]}"
-done
-# DEBUG END
 assert_msg="Update missing packages, with exclusions"
-expected_array=("Updating the following packages:" // //foo/bar)
+# Note: The expected array purposefully does not quote the message as the update_pkgs array 
+# will parse each space-separated item.
+expected_array=(Updating the following packages: // //foo/bar)
 assert_equal ${#expected_array[@]} ${#update_pkgs[@]} "${assert_msg}"
 for (( i = 0; i < ${#expected_array[@]}; i++ )); do
   assert_equal "${expected_array[${i}]}" "${update_pkgs[${i}]}" "${assert_msg}[${i}]"
 done
 
 
-# DEBUG BEGIN
-fail "IMPLEMENT ME!"
-# DEBUG END
