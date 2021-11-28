@@ -74,7 +74,7 @@ bzlformat_update_pkgs(<a href="#bzlformat_update_pkgs-name">name</a>, <a href="#
 
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
-| <a id="bzlformat_update_pkgs-name"></a>name |  <p align="center"> - </p>   |  <code>"bzlformat_pkgs"</code> |
+| <a id="bzlformat_update_pkgs-name"></a>name |  <p align="center"> - </p>   |  none |
 | <a id="bzlformat_update_pkgs-exclude"></a>exclude |  <p align="center"> - </p>   |  <code>[]</code> |
 
 
