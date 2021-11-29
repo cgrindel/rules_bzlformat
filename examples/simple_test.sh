@@ -110,7 +110,12 @@ workspace_dir="$(normalize_path "$(dirname "${workspace_path}")")"
 scratch_dir="$("${create_scratch_dir_sh}" --workspace "${workspace_dir}")"
 cd "${scratch_dir}"
 
-# MARK - Execute Test
+# MARK - Execute Tests
+
+# Make sure that all is well
+"${bazel}" test //...
+
+# MARK - Make poorly formatted changes, update the files, and execute the tests
 
 internal_build_path="${scratch_dir}/mockascript/internal/BUILD.bazel"
 mockascript_library_path="${scratch_dir}/mockascript/internal/mockascript_library.bzl"
@@ -127,5 +132,3 @@ echo "load(':foo.bzl', 'foo'); foo(tags=['b', 'a'],srcs=['d', 'c'])" \
 
 # Make sure that all is well
 "${bazel}" test //...
-
-
