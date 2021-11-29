@@ -63,7 +63,6 @@ starting_path="${starting_path%%*( )}"
 bazel="$(normalize_path "${bazel_rel_path}")"
 
 workspace_dir="$(normalize_path "$(dirname "${workspace_path}")")"
-# cd "${workspace_dir}"
 
 # MARK - Create Scratch Directory
 
@@ -107,6 +106,8 @@ for (( i = 0; i < ${#expected_array[@]}; i++ )); do
 done
 
 # MARK - Update the missing wihtout exclusions
+
+# TODO: IMPLEMENT ME
 
 # # Remove exclusions from the bzlformat_update_pkgs
 # "${buildozer}" 'add exclude //foo' //:bzlformat_pkgs
