@@ -36,31 +36,6 @@ create_scratch_dir_sh_location=cgrindel_rules_bazel_integration_test/tools/creat
 create_scratch_dir_sh="$(rlocation "${create_scratch_dir_sh_location}")" || \
   (echo >&2 "Failed to locate ${create_scratch_dir_sh_location}" && exit 1)
 
-# MARK - Functions
-
-# backup_filename() {
-#   local filename="${1}"
-#   echo "${filename}.bak"
-# }
-
-# backup_file() {
-#   local filename="${1}"
-#   local backup_filename="$(backup_filename "${filename}")"
-#   cp -f "${filename}" "${backup_filename}"
-# }
-
-# revert_file() {
-#   local filename="${1}"
-#   local backup_filename="$(backup_filename "${filename}")"
-#   [[ -f "${backup_filename}" ]] && cp -f "${backup_filename}" "${filename}"
-# }
-
-# remove_backup_file() {
-#   local filename="${1}"
-#   local backup_filename="$(backup_filename "${filename}")"
-#   rm -f "${backup_filename}"
-# }
-
 # MARK - Process Arguments
 
 # Process args
@@ -86,24 +61,7 @@ done
 starting_path="$(pwd)"
 starting_path="${starting_path%%*( )}"
 bazel="$(normalize_path "${bazel_rel_path}")"
-
 workspace_dir="$(normalize_path "$(dirname "${workspace_path}")")"
-
-
-# modified_files=("${internal_build_path}" "${mockascript_library_path}")
-# for file in "${modified_files[@]}" ; do
-#   backup_file "${file}"
-# done
-
-
-# # Clean up on exit.
-# cleanup() {
-#   for file in "${modified_files[@]}" ; do
-#     revert_file "${file}"
-#     remove_backup_file "${file}"
-#   done
-# }
-# trap cleanup EXIT
 
 # MARK - Create Scratch Directory
 
@@ -126,6 +84,9 @@ echo "load(':foo.bzl', 'foo')" >> "${internal_build_path}"
 # Add poorly formatted code to bzl file.
 echo "load(':foo.bzl', 'foo'); foo(tags=['b', 'a'],srcs=['d', 'c'])" \
   >> "${mockascript_library_path}"
+
+# Confirm that the tests fail with poorly formatted files.
+"${bazel}" test //... && fail "Expected tests to fail with poorly formatted files."
 
 # Execute the update for the repository
 "${bazel}" run //:update_all
