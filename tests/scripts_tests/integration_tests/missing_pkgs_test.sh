@@ -58,7 +58,6 @@ starting_path="$(pwd)"
 starting_path="${starting_path%%*( )}"
 bazel="$(normalize_path "${bazel_rel_path}")"
 
-# workspace_dir="$(dirname "${workspace_path}")"
 workspace_dir="$(normalize_path "$(dirname "${workspace_path}")")"
 cd "${workspace_dir}"
 
