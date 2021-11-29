@@ -32,6 +32,10 @@ messages_sh="$(rlocation "${messages_sh_location}")" || \
   (echo >&2 "Failed to locate ${messages_sh_location}" && exit 1)
 source "${messages_sh}"
 
+create_scratch_dir_sh_location=cgrindel_rules_bazel_integration_test/tools/create_scratch_dir.sh
+create_scratch_dir_sh="$(rlocation "${create_scratch_dir_sh_location}")" || \
+  (echo >&2 "Failed to locate ${create_scratch_dir_sh_location}" && exit 1)
+
 # MARK - Functions
 
 # backup_filename() {
@@ -70,10 +74,6 @@ while (("$#")); do
       workspace_path="${2}"
       shift 2
       ;;
-    "--bazel_cmd")
-      bazel_cmds+=("${2}")
-      shift 2
-      ;;
     *)
       shift 1
       ;;
@@ -89,8 +89,6 @@ bazel="$(normalize_path "${bazel_rel_path}")"
 
 workspace_dir="$(normalize_path "$(dirname "${workspace_path}")")"
 
-# internal_build_path="${workspace_dir}/mockascript/internal/BUILD.bazel"
-# mockascript_library_path="${workspace_dir}/mockascript/internal/mockascript_library.bzl"
 
 # modified_files=("${internal_build_path}" "${mockascript_library_path}")
 # for file in "${modified_files[@]}" ; do
@@ -107,8 +105,15 @@ workspace_dir="$(normalize_path "$(dirname "${workspace_path}")")"
 # }
 # trap cleanup EXIT
 
-# Change to workspace directory
-cd "${workspace_dir}"
+# MARK - Create Scratch Directory
+
+scratch_dir="$("${create_scratch_dir_sh}" --workspace "${workspace_dir}")"
+cd "${scratch_dir}"
+
+# MARK - Execute Test
+
+internal_build_path="${scratch_dir}/mockascript/internal/BUILD.bazel"
+mockascript_library_path="${scratch_dir}/mockascript/internal/mockascript_library.bzl"
 
 # Add poorly formatted code to build file.
 echo "load(':foo.bzl', 'foo')" >> "${internal_build_path}"
@@ -118,9 +123,9 @@ echo "load(':foo.bzl', 'foo'); foo(tags=['b', 'a'],srcs=['d', 'c'])" \
   >> "${mockascript_library_path}"
 
 # Execute the update for the repository
-bazel run //:update_all
+"${bazel}" run //:update_all
 
 # Make sure that all is well
-bazel test //...
+"${bazel}" test //...
 
 

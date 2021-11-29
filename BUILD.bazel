@@ -72,7 +72,8 @@ test_suite(
     name = "all_integration_tests",
     tags = integration_test_utils.DEFAULT_INTEGRATION_TEST_TAGS,
     tests = [
-        "//examples:all_integration_tests",
+        "//examples:integration_tests",
+        "//tests/scripts_tests/integration_tests",
     ],
     visibility = ["//:__subpackages__"],
 )
