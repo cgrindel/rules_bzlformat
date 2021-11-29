@@ -134,6 +134,16 @@ for (( i = 0; i < ${#expected_array[@]}; i++ )); do
   assert_equal "${expected_array[${i}]}" "${missing_pkgs[${i}]}" "${assert_msg}[${i}]"
 done
 
+update_pkgs=( $("${bazel}" run "//:bzlformat_pkgs_update_missing") )
+assert_msg="Update with no missing packages"
+# Note: The expected array purposefully does not quote the message as the update_pkgs array 
+# will parse each space-separated item.
+expected_array=(No missing package updates were found.)
+assert_equal ${#expected_array[@]} ${#update_pkgs[@]} "${assert_msg}"
+for (( i = 0; i < ${#expected_array[@]}; i++ )); do
+  assert_equal "${expected_array[${i}]}" "${update_pkgs[${i}]}" "${assert_msg}[${i}]"
+done
+
 
 
 # TODO: Move missing packages scripts to tools/missing_pkgs.

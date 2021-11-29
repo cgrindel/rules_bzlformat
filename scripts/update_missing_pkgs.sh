@@ -47,7 +47,7 @@ done
 missing_pkgs=( $(. "${find_missing_pkgs_bin}" "${find_args[@]:-}") )
 
 # If no missing packages, we are done.
-[[ ${#missing_pkgs[@]} == 0 ]] && exit
+[[ ${#missing_pkgs[@]} == 0 ]] && echo "No missing package updates were found." && exit
 
 echo "Updating the following packages:"
 for pkg in "${missing_pkgs[@]}" ; do
