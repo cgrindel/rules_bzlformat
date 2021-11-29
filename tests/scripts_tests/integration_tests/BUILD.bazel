@@ -15,6 +15,7 @@ bazel_integration_tests(
     bazel_versions = SUPPORTED_BAZEL_VERSIONS,
     sh_data = [
         "@com_github_bazelbuild_buildtools//buildozer",
+        "@cgrindel_rules_bazel_integration_test//tools:create_scratch_dir",
     ],
     sh_deps = [
         "@bazel_tools//tools/bash/runfiles",

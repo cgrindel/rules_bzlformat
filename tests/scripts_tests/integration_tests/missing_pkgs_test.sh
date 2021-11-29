@@ -30,6 +30,10 @@ buildozer_location=com_github_bazelbuild_buildtools/buildozer/buildozer_/buildoz
 buildozer="$(rlocation "${buildozer_location}")" || \
   (echo >&2 "Failed to locate ${buildozer_location}" && exit 1)
 
+create_scratch_dir_sh_location=cgrindel_rules_bazel_integration_test/tools/create_scratch_dir.sh
+create_scratch_dir_sh="$(rlocation "${create_scratch_dir_sh_location}")" || \
+  (echo >&2 "Failed to locate ${create_scratch_dir_sh_location}" && exit 1)
+
 # Process args
 while (("$#")); do
   case "${1}" in
@@ -59,22 +63,11 @@ starting_path="${starting_path%%*( )}"
 bazel="$(normalize_path "${bazel_rel_path}")"
 
 workspace_dir="$(normalize_path "$(dirname "${workspace_path}")")"
-cd "${workspace_dir}"
+# cd "${workspace_dir}"
 
 # MARK - Create Scratch Directory
 
-# Create the scratch directory
-scratch_dir="$(normalize_path "${workspace_dir}/../$(basename "${workspace_dir}").scratch")"
-echo "scratch_dir: ${scratch_dir}" 
-rm -rf "${scratch_dir}"
-mkdir -p "${scratch_dir}"
-
-# Copy the non-hidden files
-cp -R -L * "${scratch_dir}"
-
-# Copy the hidden files
-find . -type f -name ".*" -print0 | xargs -0 -I '{}' cp '{}' "${scratch_dir}"
-
+scratch_dir="$("${create_scratch_dir_sh}" --workspace "${workspace_dir}")"
 cd "${scratch_dir}"
 
 # MARK - Find the missing packages without exclusions
