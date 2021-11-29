@@ -26,6 +26,7 @@ query_for_pkgs() {
   bazel query "${query}" --output package | sed -e 's|^|//|'
 }
 
+fail_on_missing_pkgs=false
 exclude_pkgs=()
 args=()
 while (("$#")); do
@@ -33,6 +34,10 @@ while (("$#")); do
     "--exclude")
       exclude_pkgs+=( "$(normalize_pkg "${2}")" )
       shift 2
+      ;;
+    "--fail_on_missing_pkgs")
+      fail_on_missing_pkgs=true
+      shift 1
       ;;
     *)
       args+=("${1}")
@@ -54,4 +59,13 @@ for pkg in "${all_pkgs[@]}" ; do
   fi
 done
 
-print_by_line "${pkgs_missing_format[@]:-}"
+if [[ ${#pkgs_missing_format[@]} > 0 ]]; then
+  # Output the missing packages.
+  print_by_line "${pkgs_missing_format[@]:-}"
+
+  # If configured to fail on missing packages, do so.
+  if [[ "${fail_on_missing_pkgs}" == true ]]; then
+    exit 1
+  fi
+fi
+

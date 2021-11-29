@@ -68,13 +68,16 @@ cd "${scratch_dir}"
 # MARK - Find the missing packages without exclusions
 
 missing_pkgs=( $("${bazel}" run "//:bzlformat_pkgs_find_missing") )
-
 assert_msg="Missing packages, no exclusions"
 expected_array=(// //foo //foo/bar)
 assert_equal ${#expected_array[@]} ${#missing_pkgs[@]} "${assert_msg}"
 for (( i = 0; i < ${#expected_array[@]}; i++ )); do
   assert_equal "${expected_array[${i}]}" "${missing_pkgs[${i}]}" "${assert_msg}[${i}]"
 done
+
+# MARK - Ensure that test missing fails
+
+"${bazel}" run "//:bzlformat_pkgs_test_missing" && fail "Expected test for missing packages to fail."
 
 # MARK - Find the missing packages with exclusions
 
