@@ -45,10 +45,6 @@ while (("$#")); do
       workspace_path="${2}"
       shift 2
       ;;
-    "--bazel_cmd")
-      bazel_cmds+=("${2}")
-      shift 2
-      ;;
     *)
       shift 1
       ;;
