@@ -108,3 +108,7 @@ done
 # # Remove exclusions from the bzlformat_update_pkgs
 # "${buildozer}" 'add exclude //foo' //:bzlformat_pkgs
 
+
+
+# TODO: Move missing packages scripts to tools/missing_pkgs.
+# TODO: Move scripts/buildifier to tools/buildifier.
