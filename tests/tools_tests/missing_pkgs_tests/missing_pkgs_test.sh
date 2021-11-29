@@ -82,7 +82,7 @@ done
 # MARK - Find the missing packages with exclusions
 
 # Add exclusions to the bzlformat_update_pkgs
-"${buildozer}" 'add exclude //foo' //:bzlformat_pkgs
+"${buildozer}" 'add exclude //foo' //:bzlformat_missing_pkgs
 
 missing_pkgs=( $("${bazel}" run "//:bzlformat_missing_pkgs_find") )
 assert_msg="Missing packages, with exclusions"
@@ -106,8 +106,8 @@ done
 
 # MARK - Find the missing packages after removing the exclusion
 
-# Remove exclusions from the bzlformat_update_pkgs
-"${buildozer}" 'remove exclude //foo' //:bzlformat_pkgs
+# Remove exclusions from the bzlformat_missing_pkgs
+"${buildozer}" 'remove exclude //foo' //:bzlformat_missing_pkgs
 
 missing_pkgs=( $("${bazel}" run "//:bzlformat_missing_pkgs_find") )
 assert_msg="Missing packages after removing exclusions"
