@@ -10,12 +10,12 @@ def bzlformat_update_pkgs(name, exclude = []):
 
     execute_binary(
         name = find_missing_name,
-        binary = "@cgrindel_rules_bzlformat//scripts:find_missing_pkgs",
+        binary = "@cgrindel_rules_bzlformat//tools/missing_pkgs:find",
         args = exclude_args,
     )
 
     execute_binary(
         name = name + "_update_missing",
-        binary = "@cgrindel_rules_bzlformat//scripts:update_missing_pkgs",
+        binary = "@cgrindel_rules_bzlformat//tools/missing_pkgs:update",
         args = exclude_args,
     )

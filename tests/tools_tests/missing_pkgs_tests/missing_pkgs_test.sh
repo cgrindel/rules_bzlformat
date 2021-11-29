@@ -143,8 +143,3 @@ assert_equal ${#expected_array[@]} ${#update_pkgs[@]} "${assert_msg}"
 for (( i = 0; i < ${#expected_array[@]}; i++ )); do
   assert_equal "${expected_array[${i}]}" "${update_pkgs[${i}]}" "${assert_msg}[${i}]"
 done
-
-
-
-# TODO: Move missing packages scripts to tools/missing_pkgs.
-# TODO: Move scripts/buildifier to tools/buildifier.

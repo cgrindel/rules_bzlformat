@@ -9,22 +9,14 @@ filegroup(
 sh_library(
     name = "common",
     srcs = ["common.sh"],
-    visibility = ["//tests/scripts_tests/common_tests:__subpackages__"],
+    visibility = ["//tests/tools_tests/missing_pkgs_tests/common_tests:__subpackages__"],
 )
 
 # MARK: - Binaries
 
 sh_binary(
-    name = "buildifier",
-    srcs = ["buildifier.sh"],
-    data = ["@com_github_bazelbuild_buildtools//buildifier"],
-    visibility = ["//visibility:public"],
-    deps = ["@bazel_tools//tools/bash/runfiles"],
-)
-
-sh_binary(
-    name = "find_missing_pkgs",
-    srcs = ["find_missing_pkgs.sh"],
+    name = "find",
+    srcs = ["find.sh"],
     visibility = ["//visibility:public"],
     deps = [
         ":common",
@@ -34,10 +26,10 @@ sh_binary(
 )
 
 sh_binary(
-    name = "update_missing_pkgs",
-    srcs = ["update_missing_pkgs.sh"],
+    name = "update",
+    srcs = ["update.sh"],
     data = [
-        ":find_missing_pkgs",
+        ":find",
         "@com_github_bazelbuild_buildtools//buildozer",
     ],
     visibility = ["//visibility:public"],

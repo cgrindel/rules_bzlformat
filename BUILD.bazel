@@ -50,7 +50,8 @@ filegroup(
         "WORKSPACE",
         "//bzlformat:all_files",
         "//bzlformat/internal:all_files",
-        "//scripts:all_files",
+        "//tools:all_files",
+        "//tools/missing_pkgs:all_files",
     ],
 )
 
@@ -73,7 +74,7 @@ test_suite(
     tags = integration_test_utils.DEFAULT_INTEGRATION_TEST_TAGS,
     tests = [
         "//examples:integration_tests",
-        "//tests/scripts_tests/integration_tests",
+        "//tests/tools_tests/missing_pkgs_tests:integration_tests",
     ],
     visibility = ["//:__subpackages__"],
 )
