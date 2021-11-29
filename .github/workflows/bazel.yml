@@ -42,7 +42,7 @@ jobs:
     - name: Ensure all packages have bzlformat checks
       shell: bash
       run: |
-        bazelisk run //:bzlformat_pkgs_test_missing
+        bazelisk run //:bzlformat_missing_pkgs_test
 
   ubuntu_build:
 
@@ -84,4 +84,4 @@ jobs:
     - name: Ensure all packages have bzlformat checks
       shell: bash
       run: |
-        bazelisk run //:bzlformat_pkgs_test_missing
+        bazelisk run //:bzlformat_missing_pkgs_test

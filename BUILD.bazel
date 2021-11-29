@@ -8,7 +8,7 @@ load(
     "updatesrc_update_all",
 )
 load("//:bazel_versions.bzl", "SUPPORTED_BAZEL_VERSIONS")
-load("//bzlformat:bzlformat.bzl", "bzlformat_pkg", "bzlformat_update_pkgs")
+load("//bzlformat:bzlformat.bzl", "bzlformat_missing_pkgs", "bzlformat_pkg")
 
 bzlformat_pkg(name = "bzlformat")
 
@@ -19,8 +19,8 @@ updatesrc_update_all(
     ],
 )
 
-bzlformat_update_pkgs(
-    name = "bzlformat_pkgs",
+bzlformat_missing_pkgs(
+    name = "bzlformat_missing_pkgs",
     # Exclude the package that defines bzlformat_pkg.
     exclude = ["//bzlformat/internal"],
 )

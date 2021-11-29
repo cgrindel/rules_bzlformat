@@ -1,5 +1,5 @@
-load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_update_pkgs")
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_missing_pkgs")
 
-bzlformat_update_pkgs(
-    name = "bzlformat_pkgs",
+bzlformat_missing_pkgs(
+    name = "bzlformat_missing_pkgs",
 )
