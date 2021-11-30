@@ -12,6 +12,7 @@ bzlformat_pkg(name = "bzlformat")
 
 bazel_integration_tests(
     name = "simple_test",
+    timeout = "eternal",
     bazel_versions = SUPPORTED_BAZEL_VERSIONS,
     sh_data = [
         "@com_github_bazelbuild_buildtools//buildozer",
