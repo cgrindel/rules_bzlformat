@@ -101,41 +101,28 @@ updatesrc_update_all(
 )
 ```
 
-The
-[`updatesrc_update_all`](https://github.com/cgrindel/rules_updatesrc/blob/main/doc/rules_and_macros_overview.md#updatesrc_update_all)
-macro defines a runnable target that copies all of the formatted Starlark source files to the
-workspace directory.
-
-### 3. Add `bzlformat_pkg` to every Bazel package
-
-In every Bazel package, add a [`bzlformat_pkg`](/doc/rules_and_macros_overview.md#bzlformat_pkg)
-declaration.
-
-```python
-load(
-    "@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl",
-    "bzlformat_pkg",
-)
-
-bzlformat_pkg(
-    name = "bzlformat",
-)
-```
-
 The [`bzlformat_pkg`](/doc/rules_and_macros_overview.md#bzlformat_pkg) macro defines targets for a
 Bazel package that will format the Starlark source files, test that the formatted files are in the
 workspace directory and copies the formatted files to the workspace directory.
 
-A quick way to update all of your Bazel packages is to use
-[Buildozer](https://github.com/bazelbuild/buildtools/blob/master/buildozer). The following
-will add the `bzlformat_pkg` load statements and declarations:
+The [`bzlformat_missing_pkgs`](/doc/rules_and_macros_overview.md#bzlformat_missing_pkgs) macro
+defines executable targets that find, test, and fix Bazel packages that are missing a
+`bzlformat_pkg` declaration.
+
+The
+[`updatesrc_update_all`](https://github.com/cgrindel/rules_updatesrc/blob/main/doc/rules_and_macros_overview.md#updatesrc_update_all)
+macro defines a runnable target that copies all of the formatted Starlark source files to the
+workspace directory. We add a reference to the `:bzlformat_missing_pkgs_fix` target to fix the
+appropriate Bazel packages when `bazel run //:update_all` is executed.
+
+### 3. Add `bzlformat_pkg` to every Bazel package
+
+Next, we need to add `bzlformat_pkg` declarations to every Bazel package. The quickest way to do so
+is to execute `bazel run //:bzlformat_missing_pkgs_fix` or `bazel run //:update_all`.
 
 ```sh
-# Use Buildozer to add the bzlformat_pkg load and declaration to every Bazel package.
-$ buildozer \
-  'new_load @cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl bzlformat_pkg' \
-  'new bzlformat_pkg bzlformat' \
-  //...:__pkg__
+# Update the world including any bzlformat_pkg fixes
+$ bazel run //:update_all
 ```
 
 ### 4. Format, Update, and Test
@@ -149,4 +136,15 @@ $ bazel run //:update_all
 
 # Execute all of your tests including the formatting checks
 $ bazel test //...
+```
+
+### 5. (Optional) Update Your CI Test Runs
+
+To ensure that all of your Bazel packages are monitored by `rules_bzlformat`, add a call to `bazel
+run //:bzlformat_missing_pkgs_test` to your CI test runs. If any Bazel packages are missing
+`bzlformat_pkg` declarations, this executable target will exit with a non-zero value.
+
+```sh
+# Add this to your CI test runs.
+$ bazel run //:bzlformat_missing_pkgs_test
 ```
