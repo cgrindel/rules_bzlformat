@@ -22,8 +22,6 @@ updatesrc_update_all(
 
 bzlformat_missing_pkgs(
     name = "bzlformat_missing_pkgs",
-    # Exclude the package that defines bzlformat_pkg.
-    exclude = ["//bzlformat/internal"],
 )
 
 # MARK: - Targets Used By Integration Tests
