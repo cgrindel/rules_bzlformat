@@ -1,0 +1,5 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_missing_pkgs")
+
+bzlformat_missing_pkgs(
+    name = "bzlformat_missing_pkgs",
+)

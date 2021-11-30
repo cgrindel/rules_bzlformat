@@ -1,6 +1,9 @@
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load("@cgrindel_rules_bzlformat//bzlformat/internal:bzlformat_pkg.bzl", "bzlformat_pkg")
 
 package(default_visibility = ["//visibility:public"])
+
+bzlformat_pkg(name = "bzlformat")
 
 bzl_library(
     name = "deps",
@@ -12,6 +15,7 @@ bzl_library(
     srcs = ["bzlformat.bzl"],
     deps = [
         "//bzlformat/internal:bzlformat_format",
+        "//bzlformat/internal:bzlformat_missing_pkgs",
         "//bzlformat/internal:bzlformat_pkg",
     ],
 )

@@ -8,6 +8,7 @@ On this page:
 
   * [bzlformat_format](#bzlformat_format)
   * [bzlformat_pkg](#bzlformat_pkg)
+  * [bzlformat_missing_pkgs](#bzlformat_missing_pkgs)
 
 
 <a id="#bzlformat_format"></a>
@@ -28,6 +29,44 @@ Formats Starlark source files using Buildifier.
 | <a id="bzlformat_format-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/docs/build-ref.html#name">Name</a> | required |  |
 | <a id="bzlformat_format-output_suffix"></a>output_suffix |  The suffix added to the formatted output filename.   | String | optional | ".formatted" |
 | <a id="bzlformat_format-srcs"></a>srcs |  The Starlark source files to format.   | <a href="https://bazel.build/docs/build-ref.html#labels">List of labels</a> | required |  |
+
+
+<a id="#bzlformat_missing_pkgs"></a>
+
+## bzlformat_missing_pkgs
+
+<pre>
+bzlformat_missing_pkgs(<a href="#bzlformat_missing_pkgs-name">name</a>, <a href="#bzlformat_missing_pkgs-exclude">exclude</a>)
+</pre>
+
+Defines executable targets that find, test and fix any Bazel packages that are missing `bzlformat_pkg` declarations.
+
+Assuming that the name attribute is `bzlformat_missing_pkgs`, the
+following targets are defined:
+
+    bzlformat_missing_pkgs_find: Find and report any Bazel packages that
+                                 are missing the `bzlformat_pkg`
+                                 declaration.
+    bzlformat_missing_pkgs_test: Like the find target except it fails if
+                                 any missing packages are found. This is
+                                 useful to run in CI test runs to ensure
+                                 that all is well.
+    bzlformat_missing_pkgs_fix: Adds `bzlformat_pkg` declarations to any
+                                Bazel packages that are missing the
+                                declaration.
+
+
+**PARAMETERS**
+
+
+| Name  | Description | Default Value |
+| :------------- | :------------- | :------------- |
+| <a id="bzlformat_missing_pkgs-name"></a>name |  A <code>string</code> that acts as the prefix for the target names that are defined.   |  none |
+| <a id="bzlformat_missing_pkgs-exclude"></a>exclude |  A <code>list</code> of packages to exclude from the find, test and fix operations. Each package should be specifed in the format <code>//path/to/package</code>.   |  <code>[]</code> |
+
+**RETURNS**
+
+None.
 
 
 <a id="#bzlformat_pkg"></a>
