@@ -63,13 +63,41 @@ following:
 
 ```python
 load(
+    "@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl",
+    "bzlformat_missing_pkgs",
+    "bzlformat_pkg",
+)
+load(
     "@cgrindel_rules_updatesrc//updatesrc:updatesrc.bzl",
     "updatesrc_update_all",
 )
 
-# Define a runnable target to copy all of the formatted files to the workspace directory.
+# Ensures that the Starlark files in this package are formatted properly.
+bzlformat_pkg(
+    name = "bzlformat",
+)
+
+# Provides targets to find, test, and fix any Bazel packages that are missing bzlformat_pkg
+# declarations.
+#
+# bzlformat_missing_pkgs_find: Find and report any Bazel packages that missing the bzlformat_pkg
+#                              declaration.
+# bzlformat_missing_pkgs_test: Like find except it fails if any missing packages are found. This is
+#                              useful to run in CI tests to ensure that all is well.
+# bzlformat_missing_pkgs_fix: Adds bzlformat_pkg declarations to any packages that are missing
+#                             the declaration.
+bzlformat_missing_pkgs(
+    name = "bzlformat_missing_pkgs",
+)
+
+# Define a runnable target to execute all of the updatesrc_update targets
+# that are defined in your workspace.
 updatesrc_update_all(
     name = "update_all",
+    targets_to_run = [
+        # Fix the Bazel packages when we update our source files from build outputs.
+        ":bzlformat_missing_pkgs_fix",
+    ],
 )
 ```
 

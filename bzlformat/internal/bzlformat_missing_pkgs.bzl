@@ -1,6 +1,18 @@
 load("@cgrindel_bazel_shlib//rules:execute_binary.bzl", "execute_binary")
 
 def bzlformat_missing_pkgs(name, exclude = []):
+    """Defines executable targets that find, test and fix any Bazel packages that are missing `bzlformat_pkg` declarations.
+
+    Args:
+        name: A `string` that acts as the prefix for the target names that are
+              defined.
+        exclude: A `list` of packages to exclude from the find, test and fix
+                 operations. Each package should be specifed in the format
+                 `//path/to/package`.
+
+    Returns:
+        None.
+    """
     exclude_args = []
     for pkg in exclude:
         exclude_args.extend(["--exclude", pkg])
