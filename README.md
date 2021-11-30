@@ -6,6 +6,15 @@ This repository contains Bazel rules and macros that format Bazel Starlark files
 formatted files exist in the workspace directory, and copy the formatted files to the workspace
 directory.
 
+## Table of Contents
+
+* [Quickstart](#quickstart)
+  * [1\. Configure your workspace to use rules\_bzlformat](#1-configure-your-workspace-to-use-rules_bzlformat)
+  * [2\. Update the BUILD\.bazel at the root of your workspace](#2-update-the-buildbazel-at-the-root-of-your-workspace)
+  * [3\. Add bzlformat\_pkg to every Bazel package](#3-add-bzlformat_pkg-to-every-bazel-package)
+  * [4\. Format, Update, and Test](#4-format-update-and-test)
+  * [5\. (Optional) Update Your CI Test Runs](#5-optional-update-your-ci-test-runs)
+
 ## Quickstart
 
 The following provides a quick introduction on how to use the rules in this repository. Also, check
