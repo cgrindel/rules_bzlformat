@@ -26,8 +26,8 @@ sh_binary(
 )
 
 sh_binary(
-    name = "update",
-    srcs = ["update.sh"],
+    name = "fix",
+    srcs = ["fix.sh"],
     data = [
         ":find",
         "@com_github_bazelbuild_buildtools//buildozer",

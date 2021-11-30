@@ -7,7 +7,7 @@ def bzlformat_missing_pkgs(name, exclude = []):
 
     find_name = name + "_find"
     test_name = name + "_test"
-    update_name = name + "_update"
+    fix_name = name + "_fix"
 
     execute_binary(
         name = find_name,
@@ -24,7 +24,7 @@ def bzlformat_missing_pkgs(name, exclude = []):
     )
 
     execute_binary(
-        name = update_name,
-        binary = "@cgrindel_rules_bzlformat//tools/missing_pkgs:update",
+        name = fix_name,
+        binary = "@cgrindel_rules_bzlformat//tools/missing_pkgs:fix",
         args = exclude_args,
     )

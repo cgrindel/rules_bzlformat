@@ -68,6 +68,10 @@ workspace_dir="$(normalize_path "$(dirname "${workspace_path}")")"
 scratch_dir="$("${create_scratch_dir_sh}" --workspace "${workspace_dir}")"
 cd "${scratch_dir}"
 
+# MARK - Ensure that all Bazel packages have bzlformat_pkg declarations
+
+"${bazel}" run //:bzlformat_missing_pkgs_fix
+
 # MARK - Execute Tests
 
 # Make sure that all is well

@@ -8,7 +8,7 @@ On this page:
 
   * [bzlformat_format](#bzlformat_format)
   * [bzlformat_pkg](#bzlformat_pkg)
-  * [bzlformat_update_pkgs](#bzlformat_update_pkgs)
+  * [bzlformat_missing_pkgs](#bzlformat_missing_pkgs)
 
 
 <a id="#bzlformat_format"></a>
@@ -29,6 +29,25 @@ Formats Starlark source files using Buildifier.
 | <a id="bzlformat_format-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/docs/build-ref.html#name">Name</a> | required |  |
 | <a id="bzlformat_format-output_suffix"></a>output_suffix |  The suffix added to the formatted output filename.   | String | optional | ".formatted" |
 | <a id="bzlformat_format-srcs"></a>srcs |  The Starlark source files to format.   | <a href="https://bazel.build/docs/build-ref.html#labels">List of labels</a> | required |  |
+
+
+<a id="#bzlformat_missing_pkgs"></a>
+
+## bzlformat_missing_pkgs
+
+<pre>
+bzlformat_missing_pkgs(<a href="#bzlformat_missing_pkgs-name">name</a>, <a href="#bzlformat_missing_pkgs-exclude">exclude</a>)
+</pre>
+
+
+
+**PARAMETERS**
+
+
+| Name  | Description | Default Value |
+| :------------- | :------------- | :------------- |
+| <a id="bzlformat_missing_pkgs-name"></a>name |  <p align="center"> - </p>   |  none |
+| <a id="bzlformat_missing_pkgs-exclude"></a>exclude |  <p align="center"> - </p>   |  <code>[]</code> |
 
 
 <a id="#bzlformat_pkg"></a>
@@ -57,24 +76,5 @@ NOTE: Any labels detected in the `srcs` will be ignored.
 **RETURNS**
 
 None.
-
-
-<a id="#bzlformat_update_pkgs"></a>
-
-## bzlformat_update_pkgs
-
-<pre>
-bzlformat_update_pkgs(<a href="#bzlformat_update_pkgs-name">name</a>, <a href="#bzlformat_update_pkgs-exclude">exclude</a>)
-</pre>
-
-
-
-**PARAMETERS**
-
-
-| Name  | Description | Default Value |
-| :------------- | :------------- | :------------- |
-| <a id="bzlformat_update_pkgs-name"></a>name |  <p align="center"> - </p>   |  none |
-| <a id="bzlformat_update_pkgs-exclude"></a>exclude |  <p align="center"> - </p>   |  <code>[]</code> |
 
 

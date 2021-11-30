@@ -81,7 +81,7 @@ done
 
 # MARK - Find the missing packages with exclusions
 
-# Add exclusions to the bzlformat_update_pkgs
+# Add exclusions to the bzlformat_missing_pkgs
 "${buildozer}" 'add exclude //foo' //:bzlformat_missing_pkgs
 
 missing_pkgs=( $("${bazel}" run "//:bzlformat_missing_pkgs_find") )
@@ -92,16 +92,16 @@ for (( i = 0; i < ${#expected_array[@]}; i++ )); do
   assert_equal "${expected_array[${i}]}" "${missing_pkgs[${i}]}" "${assert_msg}[${i}]"
 done
 
-# MARK - Update the missing packages with exclusions
+# MARK - Fix the missing packages with exclusions
 
-update_pkgs=( $("${bazel}" run "//:bzlformat_missing_pkgs_update") )
+fix_pkgs=( $("${bazel}" run "//:bzlformat_missing_pkgs_fix") )
 assert_msg="Update missing packages, with exclusions"
-# Note: The expected array purposefully does not quote the message as the update_pkgs array 
+# Note: The expected array purposefully does not quote the message as the fix_pkgs array 
 # will parse each space-separated item.
 expected_array=(Updating the following packages: // //foo/bar)
-assert_equal ${#expected_array[@]} ${#update_pkgs[@]} "${assert_msg}"
+assert_equal ${#expected_array[@]} ${#fix_pkgs[@]} "${assert_msg}"
 for (( i = 0; i < ${#expected_array[@]}; i++ )); do
-  assert_equal "${expected_array[${i}]}" "${update_pkgs[${i}]}" "${assert_msg}[${i}]"
+  assert_equal "${expected_array[${i}]}" "${fix_pkgs[${i}]}" "${assert_msg}[${i}]"
 done
 
 # MARK - Find the missing packages after removing the exclusion
@@ -117,14 +117,14 @@ for (( i = 0; i < ${#expected_array[@]}; i++ )); do
   assert_equal "${expected_array[${i}]}" "${missing_pkgs[${i}]}" "${assert_msg}[${i}]"
 done
 
-update_pkgs=( $("${bazel}" run "//:bzlformat_missing_pkgs_update") )
+fix_pkgs=( $("${bazel}" run "//:bzlformat_missing_pkgs_fix") )
 assert_msg="Update missing packages after removing exclusions"
-# Note: The expected array purposefully does not quote the message as the update_pkgs array 
+# Note: The expected array purposefully does not quote the message as the fix_pkgs array 
 # will parse each space-separated item.
 expected_array=(Updating the following packages: //foo)
-assert_equal ${#expected_array[@]} ${#update_pkgs[@]} "${assert_msg}"
+assert_equal ${#expected_array[@]} ${#fix_pkgs[@]} "${assert_msg}"
 for (( i = 0; i < ${#expected_array[@]}; i++ )); do
-  assert_equal "${expected_array[${i}]}" "${update_pkgs[${i}]}" "${assert_msg}[${i}]"
+  assert_equal "${expected_array[${i}]}" "${fix_pkgs[${i}]}" "${assert_msg}[${i}]"
 done
 
 # MARK - Confirm that finding no missing packages works
@@ -137,12 +137,12 @@ for (( i = 0; i < ${#expected_array[@]}; i++ )); do
   assert_equal "${expected_array[${i}]}" "${missing_pkgs[${i}]}" "${assert_msg}[${i}]"
 done
 
-update_pkgs=( $("${bazel}" run "//:bzlformat_missing_pkgs_update") )
+fix_pkgs=( $("${bazel}" run "//:bzlformat_missing_pkgs_fix") )
 assert_msg="Update with no missing packages"
-# Note: The expected array purposefully does not quote the message as the update_pkgs array 
+# Note: The expected array purposefully does not quote the message as the fix_pkgs array 
 # will parse each space-separated item.
 expected_array=(No missing package updates were found.)
-assert_equal ${#expected_array[@]} ${#update_pkgs[@]} "${assert_msg}"
+assert_equal ${#expected_array[@]} ${#fix_pkgs[@]} "${assert_msg}"
 for (( i = 0; i < ${#expected_array[@]}; i++ )); do
-  assert_equal "${expected_array[${i}]}" "${update_pkgs[${i}]}" "${assert_msg}[${i}]"
+  assert_equal "${expected_array[${i}]}" "${fix_pkgs[${i}]}" "${assert_msg}[${i}]"
 done
