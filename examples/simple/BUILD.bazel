@@ -16,8 +16,8 @@ bzlformat_pkg(
 #                              declaration.
 # bzlformat_missing_pkgs_test: Like find except it fails if any missing packages are found. This is
 #                              useful to run in CI tests to ensure that all is well.
-# bzlformat_missing_pkgs_update: Adds bzlformat_pkg declarations to any packages that are missing
-#                                the declaration.
+# bzlformat_missing_pkgs_fix: Adds bzlformat_pkg declarations to any packages that are missing
+#                             the declaration.
 bzlformat_missing_pkgs(
     name = "bzlformat_missing_pkgs",
 )
