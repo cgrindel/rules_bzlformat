@@ -1,3 +1,5 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+
 filegroup(
     name = "all_files",
     srcs = glob(["*"]),
@@ -13,3 +15,5 @@ sh_binary(
     visibility = ["//visibility:public"],
     deps = ["@bazel_tools//tools/bash/runfiles"],
 )
+
+bzlformat_pkg(name = "bzlformat")
