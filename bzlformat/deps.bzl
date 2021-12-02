@@ -79,12 +79,20 @@ def bzlformat_rules_dependencies():
         ],
     )
 
+    # TODO: FIX ME
+
+    # maybe(
+    #     http_archive,
+    #     name = "cgrindel_rules_bazel_integration_test",
+    #     sha256 = "5f79f07535cf819e0395f8bb9225b50523bff96f2903049a96c0b8da47f46e41",
+    #     strip_prefix = "rules_bazel_integration_test-0.2.0",
+    #     urls = ["https://github.com/cgrindel/rules_bazel_integration_test/archive/v0.2.0.tar.gz"],
+    # )
+
     maybe(
-        http_archive,
+        native.local_repository,
         name = "cgrindel_rules_bazel_integration_test",
-        sha256 = "5f79f07535cf819e0395f8bb9225b50523bff96f2903049a96c0b8da47f46e41",
-        strip_prefix = "rules_bazel_integration_test-0.2.0",
-        urls = ["https://github.com/cgrindel/rules_bazel_integration_test/archive/v0.2.0.tar.gz"],
+        path = "/Users/chuck/code/cgrindel/rules_bazel_integration_test",
     )
 
     maybe(

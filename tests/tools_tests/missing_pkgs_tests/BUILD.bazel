@@ -10,21 +10,27 @@ bzlformat_pkg(name = "bzlformat")
 
 # MARK: - Integration Tests
 
+sh_binary(
+    name = "missing_pkgs_test_runner",
+    testonly = True,
+    srcs = ["missing_pkgs_test.sh"],
+    data = [
+        "@cgrindel_rules_bazel_integration_test//tools:create_scratch_dir",
+        "@com_github_bazelbuild_buildtools//buildozer",
+    ],
+    deps = [
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_shlib//lib:assertions",
+        "@cgrindel_bazel_shlib//lib:messages",
+        "@cgrindel_bazel_shlib//lib:paths",
+    ],
+)
+
 bazel_integration_tests(
     name = "missing_pkgs_test",
     timeout = "eternal",
     bazel_versions = SUPPORTED_BAZEL_VERSIONS,
-    sh_data = [
-        "@com_github_bazelbuild_buildtools//buildozer",
-        "@cgrindel_rules_bazel_integration_test//tools:create_scratch_dir",
-    ],
-    sh_deps = [
-        "@bazel_tools//tools/bash/runfiles",
-        "@cgrindel_bazel_shlib//lib:assertions",
-        "@cgrindel_bazel_shlib//lib:paths",
-        "@cgrindel_bazel_shlib//lib:messages",
-    ],
-    test_runner_srcs = ["missing_pkgs_test.sh"],
+    test_runner = ":missing_pkgs_test_runner",
     workspace_files = integration_test_utils.glob_workspace_files("workspace") + [
         "//:workspace_integration_test_files",
     ],
