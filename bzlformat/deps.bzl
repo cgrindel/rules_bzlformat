@@ -16,17 +16,17 @@ def bzlformat_rules_dependencies():
     maybe(
         http_archive,
         name = "cgrindel_bazel_starlib",
-        sha256 = "1f5c6b13243a1a6f79742a8a0e883f7f4591f7890a388f87c8323f4242dc718d",
-        strip_prefix = "bazel-starlib-0.1.0",
-        urls = ["https://github.com/cgrindel/bazel-starlib/archive/v0.1.0.tar.gz"],
+        sha256 = "99ea556c74c1c7e5584452848ca32459e8a1d2ba63ea3a64847423db54504bed",
+        strip_prefix = "bazel-starlib-0.1.1",
+        urls = ["https://github.com/cgrindel/bazel-starlib/archive/v0.1.1.tar.gz"],
     )
 
     maybe(
         http_archive,
         name = "cgrindel_bazel_doc",
-        sha256 = "bae4a0f41cc5cf89f26c779fc04379f09bb290b4910b2cf206c0372ad0c8aac7",
-        strip_prefix = "bazel-doc-0.1.0",
-        urls = ["https://github.com/cgrindel/bazel-doc/archive/v0.1.0.tar.gz"],
+        sha256 = "3ccc6d205a7f834c5e89adcb4bc5091a9a07a69376107807eb9aea731ce92854",
+        strip_prefix = "bazel-doc-0.1.2",
+        urls = ["https://github.com/cgrindel/bazel-doc/archive/v0.1.2.tar.gz"],
     )
 
     maybe(
@@ -82,15 +82,15 @@ def bzlformat_rules_dependencies():
     maybe(
         http_archive,
         name = "cgrindel_rules_bazel_integration_test",
-        sha256 = "ef6cf463a269d969bdb3b31eed53c50d3667f02e004abc9ce7a3a2413eadca6a",
-        strip_prefix = "rules_bazel_integration_test-0.3.0",
-        urls = ["https://github.com/cgrindel/rules_bazel_integration_test/archive/v0.3.0.tar.gz"],
+        sha256 = "50b808269ee09373c099256103c40629db8a66fd884030d7a36cf9a2e8675b75",
+        strip_prefix = "rules_bazel_integration_test-0.3.1",
+        urls = ["https://github.com/cgrindel/rules_bazel_integration_test/archive/v0.3.1.tar.gz"],
     )
 
     maybe(
         http_archive,
         name = "cgrindel_bazel_shlib",
-        sha256 = "d2f0a8dd3180463f00451449ad1f0bedfebb3d2bccc8178634ef5ad07ab55dac",
-        strip_prefix = "bazel_shlib-0.2.0",
-        urls = ["https://github.com/cgrindel/bazel_shlib/archive/v0.2.0.tar.gz"],
+        sha256 = "39c250852fb455e5de18f836c0c339075d6e52ea5ec52a76d62ef9e2eed56337",
+        strip_prefix = "bazel_shlib-0.2.1",
+        urls = ["https://github.com/cgrindel/bazel_shlib/archive/v0.2.1.tar.gz"],
     )
