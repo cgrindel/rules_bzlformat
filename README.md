@@ -1,5 +1,8 @@
 # Buildifier Rules for Bazel
 
+__NOTE: The functionality for this repository has moved to [cgrindel/bazel-starlib](https://github.com/cgrindel/bazel-starlib).__
+
+
 This repository contains Bazel rules and macros that format Bazel Starlark files (e.g. `.bzl`,
 `BUILD`, `BUILD.bazel`) using
 [Buildifier](https://github.com/bazelbuild/buildtools/tree/master/buildifier), test that the
